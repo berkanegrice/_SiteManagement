@@ -5,6 +5,9 @@ using SiteManagement.Infrastructure.Persistence.Interceptors;
 using MediatR;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SiteManagement.Domain.Entities;
+using SiteManagement.Domain.Entities.DuesRelated;
+using SiteManagement.Domain.Entities.FileRelated;
 
 namespace SiteManagement.Infrastructure.Persistence;
 
@@ -34,6 +37,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     {
         optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
     }
+
+    public DbSet<DuesInformation> DuesInformations { get; set; }
+    public DbSet<UserModel> UsersModel { get; set; }
+    public DbSet<DuesDetailedInformation> DuesDetailedInformations { get; set; }
+    public DbSet<FileOnDatabaseModel> FilesOnDatabase { get; set; }
+    public DbSet<FileOnFileSystemModel> FilesOnFileSystem { get; set; }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

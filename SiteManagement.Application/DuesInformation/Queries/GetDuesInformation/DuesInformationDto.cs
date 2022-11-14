@@ -15,5 +15,5 @@ public class DuesInformationDto : IMapFrom<Domain.Entities.DuesRelated.DuesInfor
     public string Credit { get; set; }
     public string BalanceDebt { get; set; }
     public string BalanceCredit { get; set; }
-    public IList<DuesInformationDto> DuesInformations { get; set; }
+    private IList<DuesInformationDto> DuesInformations { get; set; }
 }

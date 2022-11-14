@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Security;
+using SiteManagement.Domain.Entities;
 
 namespace SiteManagement.Application.DuesInformation.Queries.GetDuesInformation;
 
@@ -23,24 +24,20 @@ public class GetDuesInformationHandler : IRequestHandler<GetDuesInformationQuery
     
     public async Task<DuesInformationVm> Handle(GetDuesInformationQuery request, CancellationToken cancellationToken)
     {
-
+        var list = await _context.DuesInformations
+            .AsNoTracking()
+            .ProjectTo<DuesInformationDto>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken).ConfigureAwait(false);
+        
+        // Lists = await _context.DuesInformations
+        //     .AsNoTracking()
+        //     .ProjectTo<DuesInformationDto>(_mapper.ConfigurationProvider)
+        //     .ToListAsync(cancellationToken).ConfigureAwait(false)
+            
         return new DuesInformationVm()
         {
-            Lists = from d in _context.DuesInformations
-                join u in _context.UsersModel.Where(x => x.Email == currentUser.Email)
-                    on d.AccountCode equals u.AccountCode
-                    
-
+            Lists = list
         };
-
-        // return new DuesInformationVm()
-        // {
-        //     Lists = await _context.DuesInformations
-        //         .AsNoTracking()
-        //         .ProjectTo<DuesInformationDto>(_mapper.ConfigurationProvider)
-        //         .OrderBy(t => t.Title)
-        //         .ToListAsync(cancellationToken)
-        // };
     }
 }
 
