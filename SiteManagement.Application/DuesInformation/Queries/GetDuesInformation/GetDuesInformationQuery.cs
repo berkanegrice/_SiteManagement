@@ -1,5 +1,7 @@
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Security;
 
@@ -19,14 +21,27 @@ public class GetDuesInformationHandler : IRequestHandler<GetDuesInformationQuery
         _mapper = mapper;
     }
     
-    
-    
     public async Task<DuesInformationVm> Handle(GetDuesInformationQuery request, CancellationToken cancellationToken)
     {
+
         return new DuesInformationVm()
         {
-            
-        }
+            Lists = from d in _context.DuesInformations
+                join u in _context.UsersModel.Where(x => x.Email == currentUser.Email)
+                    on d.AccountCode equals u.AccountCode
+                    
+
+        };
+
+        // return new DuesInformationVm()
+        // {
+        //     Lists = await _context.DuesInformations
+        //         .AsNoTracking()
+        //         .ProjectTo<DuesInformationDto>(_mapper.ConfigurationProvider)
+        //         .OrderBy(t => t.Title)
+        //         .ToListAsync(cancellationToken)
+        // };
     }
 }
+
 
