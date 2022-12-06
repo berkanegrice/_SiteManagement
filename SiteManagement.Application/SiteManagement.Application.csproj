@@ -10,16 +10,22 @@
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-rc.2.22472.11" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0-rc.2.22472.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.11" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DuesInformation\Commands" />
+      <Folder Include="DueDetailedInformations\Commands" />
+      <Folder Include="DueInformations\Commands" />
+      <Folder Include="Users\Commands" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\SiteManagement.Domain\SiteManagement.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="SiteManagement.Application.csproj.DotSettings" />
     </ItemGroup>
 
 </Project>

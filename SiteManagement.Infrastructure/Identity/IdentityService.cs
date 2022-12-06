@@ -8,20 +8,28 @@ namespace SiteManagement.Infrastructure.Identity;
 
 public class IdentityService : IIdentityService
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
+    private readonly UserManager<IdentityUser> _userManager;
+    private readonly IUserClaimsPrincipalFactory<IdentityUser> _userClaimsPrincipalFactory;
     private readonly IAuthorizationService _authorizationService;
 
+
     public IdentityService(
-        UserManager<ApplicationUser> userManager,
-        IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
+        UserManager<IdentityUser> userManager,
+        IUserClaimsPrincipalFactory<IdentityUser> userClaimsPrincipalFactory,
         IAuthorizationService authorizationService)
     {
         _userManager = userManager;
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         _authorizationService = authorizationService;
     }
-    
+
+    public async Task<string> GetUserEmailAsync(string userId)
+    {
+        var user =  await _userManager.Users.FirstAsync(u => u.Id == userId);
+        
+        return user.Email;
+    }
+
     public async Task<string> GetUserNameAsync(string userId)
     {
         var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
@@ -31,7 +39,7 @@ public class IdentityService : IIdentityService
 
     public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password)
     {
-        var user = new ApplicationUser
+        var user = new IdentityUser()
         {
             UserName = userName,
             Email = userName,
@@ -72,7 +80,7 @@ public class IdentityService : IIdentityService
         return user != null ? await DeleteUserAsync(user) : Result.Success();
     }
 
-    public async Task<Result> DeleteUserAsync(ApplicationUser user)
+    private async Task<Result> DeleteUserAsync(IdentityUser user)
     {
         var result = await _userManager.DeleteAsync(user);
 

@@ -1,8 +1,8 @@
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SiteManagement.Domain.Common;
 
-
-namespace MediatR;
+namespace SiteManagement.Infrastructure.Common;
 
 public static class MediatorExtensions
 {
