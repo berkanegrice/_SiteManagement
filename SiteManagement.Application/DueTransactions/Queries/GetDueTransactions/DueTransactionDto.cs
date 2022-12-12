@@ -1,9 +1,8 @@
-namespace SiteManagement.Domain.Entities.DuesRelated;
+namespace SiteManagement.Application.DueTransactions.Queries.GetDueTransactions;
 
-public class DueTransaction : BaseAuditableEntity
+public class DueTransactionDto
 {
-    public new int Id { get; set; }
-    public int AccountCode { get; set; }
+    public int Id { get; set; }
     
     public DateTime Date { get; set; }
     
@@ -16,6 +15,4 @@ public class DueTransaction : BaseAuditableEntity
     public string BalanceDebt { get; set; }
     
     public string BalanceCredit { get; set; }
-    
-    public DueInformation DueInformation { get; set; }
 }

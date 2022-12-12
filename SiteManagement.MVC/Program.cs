@@ -6,18 +6,11 @@ using SiteManagement.MVC;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddWebUiServices();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-
-// builder.Services.AddDefaultIdentity<IdentityUser>(
-//         options => options.SignIn.RequireConfirmedAccount = true)
-//     .AddEntityFrameworkStores<ApplicationDbContext>();
-
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

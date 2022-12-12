@@ -1,22 +1,27 @@
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SiteManagement.Application.Common.Interfaces;
+using SiteManagement.Application.Users.Queries.GetUsers;
 
 namespace SiteManagement.MVC.Controllers;
 
-public class UserController : ApiControllerBase
+public class UserController : Controller
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly IMediator _mediator;
+    private readonly ICurrentUserService _currentUserService;
 
-    public UserController(UserManager<IdentityUser> userManager)
+    public UserController(IMediator mediator, ICurrentUserService currentUserService)
     {
-        _userManager = userManager;
+        _mediator = mediator;
+        _currentUserService = currentUserService;
     }
     
     public async Task<IActionResult> Index()
     {
-        var currentUser = await _userManager.GetUserAsync(CurrentUserService.User);
-        var allUsersExceptCurrentUser = await _userManager.Users.Where(a => a.Id != currentUser.Id).ToListAsync();
-        return View(allUsersExceptCurrentUser);
+        var userList =
+            await _mediator.Send(new GetUserListQuery{ UserId = _currentUserService.UserId }); 
+        return View(await userList.ToListAsync());
     }
 }

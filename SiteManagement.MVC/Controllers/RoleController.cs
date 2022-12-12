@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SiteManagement.MVC.Controllers;
 
-public class UserRolesController : Controller
+public class RoleController : Controller
 {
-    public async Task<IActionResult> Index(string userId)
+    public IActionResult Index()
     {
         return View();
     }

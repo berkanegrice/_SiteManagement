@@ -17,10 +17,15 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
+        <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.23" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\SiteManagement.Infrastructure\SiteManagement.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\DueTransaction\Index.cshtml" />
     </ItemGroup>
 
 </Project>

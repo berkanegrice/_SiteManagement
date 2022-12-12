@@ -1,8 +1,6 @@
 using System.Reflection;
 using AutoMapper;
 using SiteManagement.Application.DueInformations.Queries.GetDueInformations;
-using SiteManagement.Application.Users.Queries.GetUsers;
-using SiteManagement.Domain.Entities;
 using SiteManagement.Domain.Entities.DuesRelated;
 
 namespace SiteManagement.Application.Common.Mappings;
@@ -13,12 +11,15 @@ public class MappingProfile : Profile
     {
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
-        // CreateMap<User, UserDto>();
-        // CreateMap<DueInformation, DueInformationDto>()
-        //     .ForMember(dest => dest.LeaseHolder,
-        //         conf
-        //             => conf.MapFrom(src => src.User.UserName));
-        
+        CreateMap<DueInformation, DueInformationDto>()
+            .ForMember(
+                dto => dto.LeaseHolder,
+                conf => 
+                    conf.MapFrom(ol => ol.User.UserName));
+
+        // TODO: Fix Automapper for DueTransaction.
+        // CreateMap<DueTransaction, DueTransactionDto>()
+        //     .IncludeBase<DueInformation, DueInformationDto>();
     }
 
     private void ApplyMappingsFromAssembly(Assembly assembly)

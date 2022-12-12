@@ -42,7 +42,9 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>, IApplicatio
 
         builder.Entity<DueInformation>()
             .HasMany(di => di.Transactions)
-            .WithOne(di => di.DueInformation);
+            .WithOne(di => di.DueInformation)
+            .HasPrincipalKey(di=> di.AccountCode)
+            .HasForeignKey(dt => dt.AccountCode);
 
         // builder.ApplyConfiguration(new RoleConfiguration());
         // builder.ApplyConfiguration(new UserConfiguration());
