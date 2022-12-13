@@ -24,8 +24,6 @@ public class GetUserListHandler : IRequestHandler<GetUserListQuery, IQueryable<I
         _mapper = mapper;
         _identityService = identityService;
     }
-    
-    
     public Task<IQueryable<IdentityUser>> Handle(GetUserListQuery request, CancellationToken cancellationToken)
     {
         return Task.FromResult(_userManager

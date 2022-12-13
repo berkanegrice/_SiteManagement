@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SiteManagement.MVC.Model;
+using SiteManagement.MVC.Models;
 using System.Linq.Dynamic.Core;
 
 namespace SiteManagement.MVC.Services;

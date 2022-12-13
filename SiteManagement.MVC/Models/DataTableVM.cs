@@ -1,4 +1,4 @@
-namespace SiteManagement.MVC.Model;
+namespace SiteManagement.MVC.Models;
 
 public class DataTableVm
 {

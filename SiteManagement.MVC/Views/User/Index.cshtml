@@ -1,6 +1,21 @@
 @using Microsoft.AspNetCore.Identity;
 @model IEnumerable<IdentityUser>
-<h1>User List</h1>
+
+
+<h4>Yeni Kullanici Listesi Ekle</h4>
+@{await Html.RenderPartialAsync("UploadUserList"); }
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible" style="margin-top:20px">
+        @TempData["Message"]
+        <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+            <a type="button" class="btn btn-primary" asp-controller="User" asp-action="ApplyUserList" >Uygula</a>
+        </span>
+    </div>
+}
+
+<h1>Kullanici Listesi</h1>
 <br />
 <table class="table table-striped" id="userTable">
     <thead>

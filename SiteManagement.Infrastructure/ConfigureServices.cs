@@ -42,6 +42,8 @@ public static class ConfigureServices
 
         services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<IDateTime, DateTimeService>();
+        services.AddTransient<IFileService, FileService>();
+        services.AddTransient<IUserFactory, UserFactory>();
 
         return services;
     }
