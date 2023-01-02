@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Files.Commands.UploadFiles;
+using SiteManagement.Application.Users.Commands;
 using SiteManagement.Application.Users.Queries.GetUsers;
 using SiteManagement.MVC.Models;
 
@@ -13,51 +15,63 @@ public class UserController : Controller
 {
     private readonly IMediator _mediator;
     private readonly ICurrentUserService _currentUserService;
-    private readonly IUserFactory _userFactory;
 
-    public UserController(IMediator mediator, ICurrentUserService currentUserService, 
-        IUserFactory userFactory)
+    public UserController(IMediator mediator, ICurrentUserService currentUserService)
     {
         _mediator = mediator;
         _currentUserService = currentUserService;
-        _userFactory = userFactory;
+        
     }
-    
-    public async Task<IActionResult> Index(string? message)
+
+    public async Task<IActionResult> Index(string? message, int userListId)
     {
         TempData["Message"] = message;
+        TempData["UserListId"] = userListId;
         var userList =
-            await _mediator.Send(new GetUserListQuery{ UserId = _currentUserService.UserId }); 
+            await _mediator.Send(
+                new GetUserListQuery {UserId = _currentUserService.UserId});
         return View(await userList.ToListAsync());
     }
 
     public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View(new ErrorViewModel
+            {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> UploadUserList(IFormFile file, string description)
     {
-        var res = await _userFactory.UploadUserList(new UploadFileRequest()
+        var res = await _mediator.Send(
+            new UploadUserListCommand()
         {
-            FormFile = file,
-            Description = description, 
-            UploadedBy = _currentUserService.UserId!
+            UploadFileCommand = new UploadFileCommand()
+            {
+                File = file,
+                Description = description,
+                UploadedBy = _currentUserService.UserId!
+            }
         });
-        return res
+        
+        return res!.Success
             ? RedirectToAction("Index", new
-                { message = "Kullanici listesi basariyla yuklendi" })
+            {
+                message = "Kullanici listesi basariyla yuklendi",
+                UserListId = res.InsertedId
+            })
             : RedirectToAction("Error");
     }
 
-    public async Task<IActionResult> ApplyUserList(int id)
+    public async Task<IActionResult> ApplyUserList(int userListId)
     {
-        var res = await _userFactory.ApplyUserList(new ApplyUserListRequest()
+        var res = await _mediator.Send(
+            new ApplyUserListCommand()
         {
-            Id = id
+            Id = userListId
         });
         
-        return RedirectToAction("Index");
+        return res.Status
+            ? RedirectToAction("Index")
+            : RedirectToAction("Error");
     }
 }

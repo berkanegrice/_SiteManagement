@@ -1,7 +1,7 @@
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Models;
-using SiteManagement.Application.Files.Commands.UploadFile;
+using SiteManagement.Application.Files.Commands.UploadFiles;
 using SiteManagement.Application.Files.Queries.GetFiles;
 
 namespace SiteManagement.Infrastructure.Services;
@@ -15,7 +15,7 @@ public class FileService : IFileService
         _mediator = mediator;
     }
 
-    public async Task<bool> UploadFile(UploadFileRequest request)
+    public async Task<ResponseUploadFileCommand> UploadFile(UploadFileRequest request)
     {
         return await _mediator.Send(
             new UploadFileCommand()
@@ -29,14 +29,10 @@ public class FileService : IFileService
 
     public async Task<FileOnDataBaseDto> FetchFile(FetchFileRequest request)
     {
-        var res = await _mediator.Send(
+        return await _mediator.Send(
             new GetFileQuery()
             {
                 Id = request.Id
             });
-     
-        
-        
-        throw new NotImplementedException();
     }
 }

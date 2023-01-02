@@ -2,18 +2,19 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Domain.Entities.FileRelated;
+using SiteManagement.Domain.Events;
 
-namespace SiteManagement.Application.Files.Commands.UploadFile;
+namespace SiteManagement.Application.Files.Commands.UploadFiles;
 
 
-public record UploadFileCommand : IRequest<bool>
+public record UploadFileCommand : IRequest<ResponseUploadFileCommand>
 {
     public string UploadedBy { get; init; }
     public IFormFile File { get; init; }
     public string Description { get; init; }
 }
 
-public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, bool>
+public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, ResponseUploadFileCommand>
 {
     private readonly IApplicationDbContext _context;
     
@@ -22,7 +23,8 @@ public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, bool>
         _context = context;
     }
     
-    public async Task<bool> Handle(UploadFileCommand request, CancellationToken cancellationToken)
+    public async Task<ResponseUploadFileCommand> Handle(UploadFileCommand request, 
+        CancellationToken cancellationToken)
     {
         var fileName = Path.GetFileNameWithoutExtension(request.File.FileName);
         var extension = Path.GetExtension(request.File.FileName);
@@ -40,8 +42,15 @@ public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, bool>
             await request.File.CopyToAsync(dataStream, cancellationToken).ConfigureAwait(false);
             fileModel.Data = dataStream.ToArray();
         }
-        _context.FilesOnDatabase.Add(fileModel);
         
-        return await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false) > 0;
+        fileModel.AddDomainEvent(new NewUserListAddedEvent(fileModel));
+            
+        _context.FilesOnDatabase.Add(fileModel);
+
+        return new ResponseUploadFileCommand()
+        {
+            Success = await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false) > 0,
+            InsertedId = fileModel.Id
+        };
     }
 }

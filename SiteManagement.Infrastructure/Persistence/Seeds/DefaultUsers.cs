@@ -21,6 +21,7 @@ public static class DefaultUsers
             EmailConfirmed = true,
             PhoneNumberConfirmed = true,
         };
+        
         if (userManager.Users.All(u => u.Id != defaultUser.Id))
         {
             var user = await userManager.FindByEmailAsync(defaultUser.Email);
@@ -38,6 +39,7 @@ public static class DefaultUsers
             EmailConfirmed = true,
             PhoneNumberConfirmed = true,
         };
+        
         if (userManager.Users.All(u => u.Id != superUser.Id))
         {
             var user = await userManager.FindByEmailAsync(superUser.Email);
@@ -51,9 +53,9 @@ public static class DefaultUsers
         }
     }
     
-    private static async Task SeedFromUserListAsync(UserManager<IdentityUser> userManager, 
-        RoleManager<IdentityRole> roleManager)
-    {
-        throw new NotImplementedException();
-    }
+    // private static async Task SeedFromUserListAsync(UserManager<IdentityUser> userManager, 
+    //     RoleManager<IdentityRole> roleManager)
+    // {
+    //     throw new NotImplementedException();
+    // }
 }

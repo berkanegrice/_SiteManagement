@@ -1,6 +1,6 @@
 namespace SiteManagement.Domain.Entities.FileRelated;
 
-public class FileModel
+public class FileModel : BaseAuditableEntity
 {
     public int Id { get; set; }
     public string Name { get; set; }
