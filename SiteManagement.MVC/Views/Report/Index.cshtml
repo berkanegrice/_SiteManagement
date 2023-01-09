@@ -1,0 +1,69 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SiteManagement.Infrastructure.Persistence.Constants
+@using Microsoft.AspNetCore.Authorization
+@model List<SiteManagement.Application.Files.Queries.GetFiles.FileOnDataBaseDto>
+@inject IAuthorizationService AuthorizationService
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if ((AuthorizationService.AuthorizeAsync(User, Permissions.LeaseHolder.Create)).Result.Succeeded)
+{
+    <h4>Dosya yükleme</h4>
+    <hr/>
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success alert-dismissible" style="margin-top:20px">
+            @ViewBag.Message
+        </div>
+    }
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" multiple required/>
+        <input type="text" autocomplete="off" placeholder="Enter File Description" name="description" required/>
+        <button class="btn btn-success" type="submit" asp-controller="Report" asp-action="UploadToDatabase">Yükle</button>
+    </form>
+    <hr/>
+}
+
+<h4>Raporlar</h4>
+@if (Model.Count == 0)
+{
+    <caption>Kayit Bulunamadi</caption>
+}
+else
+{
+    <caption>Kayitli Raporlar</caption>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>File Type</th>
+            <th>Created On</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var file in Model)
+        {
+            <tr>
+                <th>@file.Id</th>
+                <td>@file.Name</td>
+                <td>@file.Description</td>
+                <td>@file.FileType</td>
+                <td>@file.CreatedOn</td>
+                <td>
+                    <a type="button" class="btn btn-primary" asp-controller="Report" asp-action="DownloadFileFromDatabase" asp-route-id="@file.Id">Indir</a>
+                    @if ((AuthorizationService.AuthorizeAsync(User, Permissions.LeaseHolder.Create)).Result.Succeeded)
+                    {
+                        <a type="button" class="btn btn-danger" asp-controller="Report" asp-action="DeleteFileFromDatabase" asp-route-id="@file.Id">Sil</a>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

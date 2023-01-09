@@ -32,4 +32,8 @@
       <ProjectReference Include="..\SiteManagement.Domain\SiteManagement.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Persistence\Migrations" />
+    </ItemGroup>
+
 </Project>

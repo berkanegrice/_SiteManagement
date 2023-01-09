@@ -18,10 +18,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DueTransactions\Commands" />
-      <Folder Include="DueInformations\Commands" />
-      <Folder Include="Roles\Commands" />
-      <Folder Include="Roles\Queries" />
+      <Folder Include="DueRelated" />
+      <Folder Include="Managements" />
     </ItemGroup>
 
     <ItemGroup>

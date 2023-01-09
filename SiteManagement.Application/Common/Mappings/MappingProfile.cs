@@ -1,6 +1,6 @@
 using System.Reflection;
 using AutoMapper;
-using SiteManagement.Application.DueInformations.Queries.GetDueInformations;
+using SiteManagement.Application.DueRelated.DueInformations.Queries.GetDueInformations;
 using SiteManagement.Application.Files.Queries.GetFiles;
 using SiteManagement.Domain.Entities.DuesRelated;
 using SiteManagement.Domain.Entities.FileRelated;
@@ -19,7 +19,10 @@ public class MappingProfile : Profile
             .ForMember(
                 dto => dto.LeaseHolder,
                 conf => 
-                    conf.MapFrom(ol => ol.User.UserName));
+                    conf.MapFrom(ol => ol.User.UserName))
+            .ForMember(dto => dto.Email,
+                conf =>
+                    conf.MapFrom(ol => ol.User.Email));
 
         //TODO: This should be refactored.
         CreateMap<FileOnDatabaseModel, FileOnDataBaseDto>()

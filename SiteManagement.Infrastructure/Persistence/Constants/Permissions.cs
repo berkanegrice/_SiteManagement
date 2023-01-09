@@ -2,17 +2,14 @@ namespace SiteManagement.Infrastructure.Persistence.Constants;
 
 public static class Permissions
 {
-    public static List<string> GeneratePermissionsForModule(string module)
+    public static IEnumerable<string> GeneratePermissionsForModule(string module)
     {
         return new List<string>()
         {
-            $"Permissions.{module}.Create",
-            $"Permissions.{module}.View",
-            $"Permissions.{module}.Edit",
-            $"Permissions.{module}.Delete",
+            $"Permissions.{module}"
         };
     }
-
+    
     public static class Dues
     {
         public const string View = "Permissions.Dues.View";

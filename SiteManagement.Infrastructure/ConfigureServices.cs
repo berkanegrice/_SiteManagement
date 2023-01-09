@@ -8,7 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SiteManagement.Infrastructure.Persistence.Interceptors;
+using SiteManagement.Infrastructure.Services.Dues;
+using SiteManagement.Infrastructure.Services.Managements;
+using SiteManagement.Infrastructure.Services.Misc;
 using SiteManagement.Infrastructure.Services.Permissions;
+using SiteManagement.Infrastructure.Services.StorageServices;
 
 
 namespace SiteManagement.Infrastructure;
@@ -40,10 +44,17 @@ public static class ConfigureServices
 
         #endregion
 
+        #region Feature Services
+
         services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IFileService, FileService>();
         services.AddTransient<IUserFactory, UserFactory>();
+        services.AddTransient<IRoleFactory, RoleFactory>();
+        services.AddTransient<ISignInFactory, SignInFactory>();
+        services.AddTransient<IDueFactory, DueFactory>();
+
+        #endregion
 
         return services;
     }

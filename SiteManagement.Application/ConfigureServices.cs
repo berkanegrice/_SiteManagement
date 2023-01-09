@@ -14,6 +14,5 @@ public static class ConfigureServices
         services.AddMediatR(Assembly.GetExecutingAssembly());
         
         return services;
-        
     }
 }

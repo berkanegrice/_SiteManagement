@@ -37,6 +37,7 @@ public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, Respo
             Name = fileName,
             Description = request.Description
         };
+        
         using (var dataStream = new MemoryStream())
         {
             await request.File.CopyToAsync(dataStream, cancellationToken).ConfigureAwait(false);
@@ -44,7 +45,6 @@ public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, Respo
         }
         
         fileModel.AddDomainEvent(new NewUserListAddedEvent(fileModel));
-            
         _context.FilesOnDatabase.Add(fileModel);
 
         return new ResponseUploadFileCommand()

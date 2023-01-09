@@ -1,0 +1,8 @@
+@model dynamic
+
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="file" required />
+    <input type="text" autocomplete="off" placeholder="Enter File Description" name="description" required />
+    <button class="btn btn-success" type="submit" asp-controller="Due" asp-action="UploadDueList">Yükle</button>
+</form>
+

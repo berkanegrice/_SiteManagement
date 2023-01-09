@@ -4,11 +4,7 @@ namespace SiteManagement.Infrastructure.Services.Permissions
 {
     public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {
-        
-        public PermissionAuthorizationHandler()
-        {
-
-        }
+        public PermissionAuthorizationHandler() { }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
@@ -18,7 +14,6 @@ namespace SiteManagement.Infrastructure.Services.Permissions
             if (!permissions.Any()) return Task.CompletedTask;
             context.Succeed(requirement);
             return Task.CompletedTask;
-
         }
     }
 }

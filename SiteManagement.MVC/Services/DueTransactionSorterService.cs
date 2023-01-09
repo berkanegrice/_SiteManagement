@@ -1,4 +1,4 @@
-using SiteManagement.Application.DueTransactions.Queries.GetDueTransactions;
+using SiteManagement.Application.DueRelated.DueTransactions.Queries.GetDueTransactions;
 
 namespace SiteManagement.MVC.Services;
 

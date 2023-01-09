@@ -33,35 +33,31 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>, IApplicatio
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     
         base.OnModelCreating(builder);
-
+    
         builder.Entity<User>()
             .HasOne(u => u.Due)
             .WithOne(d => d.User)
             .HasPrincipalKey<User>(u => u.UserCode)
             .HasForeignKey<DueInformation>(d => d.AccountCode);
-
+    
         builder.Entity<DueInformation>()
             .HasMany(di => di.Transactions)
             .WithOne(di => di.DueInformation)
             .HasPrincipalKey(di=> di.AccountCode)
             .HasForeignKey(dt => dt.AccountCode);
-
+    
         // builder.ApplyConfiguration(new RoleConfiguration());
         // builder.ApplyConfiguration(new UserConfiguration());
         // builder.ApplyConfiguration(new UserRoleConfiguration());
     }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
     }
-
-    public DbSet<DueInformation> DueInformations { get; set; }
     public new DbSet<User> Users { get; set; }
     public DbSet<DueTransaction> DueTransactions { get; set; }
+    public DbSet<DueInformation> DueInformations { get; set; }
     public DbSet<FileOnDatabaseModel> FilesOnDatabase { get; set; }
-    public DbSet<FileOnFileSystemModel> FilesOnFileSystem { get; set; }
-
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         await _mediator.DispatchDomainEvents(this);

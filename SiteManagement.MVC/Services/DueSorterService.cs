@@ -1,4 +1,4 @@
-using SiteManagement.Application.DueInformations.Queries.GetDueInformations;
+using SiteManagement.Application.DueRelated.DueInformations.Queries.GetDueInformations;
 
 namespace SiteManagement.MVC.Services;
 
