@@ -1,20 +1,21 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SiteManagement.Infrastructure.Identity;
 using SiteManagement.Infrastructure.Persistence.Seeds;
 
 namespace SiteManagement.Infrastructure.Persistence;
 
 public class ApplicationDbContextInitialiser
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IdentityContext _context;
     private readonly ILogger<ApplicationDbContextInitialiser> _logger;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
     public ApplicationDbContextInitialiser(
         ILogger<ApplicationDbContextInitialiser> logger, 
-        ApplicationDbContext context, 
+        IdentityContext context, 
         UserManager<IdentityUser> userManager, 
         RoleManager<IdentityRole> roleManager)
     {

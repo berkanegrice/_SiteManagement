@@ -2,8 +2,6 @@ using System.Reflection;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Infrastructure.Persistence.Interceptors;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SiteManagement.Domain.Entities;
 using SiteManagement.Domain.Entities.DuesRelated;
@@ -12,7 +10,7 @@ using SiteManagement.Infrastructure.Common;
 
 namespace SiteManagement.Infrastructure.Persistence;
 
-public class ApplicationDbContext : IdentityDbContext<IdentityUser>, IApplicationDbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private readonly IMediator _mediator;
     private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
@@ -21,12 +19,16 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>, IApplicatio
         DbContextOptions<ApplicationDbContext> options, 
         IMediator mediator,
         AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor 
-    ) 
-        : base(options)
+    ) : base(options)
     {
         _mediator = mediator;
         _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
     }
+    
+    public new DbSet<User> Users { get; set; }
+    public DbSet<DueTransaction> DueTransactions { get; set; }
+    public DbSet<DueInformation> DueInformations { get; set; }
+    public DbSet<FileOnDatabaseModel> FilesOnDatabase { get; set; }
     
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -45,19 +47,11 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>, IApplicatio
             .WithOne(di => di.DueInformation)
             .HasPrincipalKey(di=> di.AccountCode)
             .HasForeignKey(dt => dt.AccountCode);
-    
-        // builder.ApplyConfiguration(new RoleConfiguration());
-        // builder.ApplyConfiguration(new UserConfiguration());
-        // builder.ApplyConfiguration(new UserRoleConfiguration());
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
     }
-    public new DbSet<User> Users { get; set; }
-    public DbSet<DueTransaction> DueTransactions { get; set; }
-    public DbSet<DueInformation> DueInformations { get; set; }
-    public DbSet<FileOnDatabaseModel> FilesOnDatabase { get; set; }
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         await _mediator.DispatchDomainEvents(this);
