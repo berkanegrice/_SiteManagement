@@ -80,6 +80,12 @@ public class DueFactory : IDueFactory
         
         #endregion
 
+        #region Remove Old Data
+
+        _context.DueInformations.RemoveRange(_context.DueInformations);
+
+        #endregion
+        
         #region Process Data
 
         var duesOnCsv = Serializer<DueOnCsv>
@@ -130,6 +136,12 @@ public class DueFactory : IDueFactory
         
         #endregion
         
+        #region Remove Old Data
+
+        _context.DueTransactions.RemoveRange(_context.DueTransactions);
+
+        #endregion
+
         #region Process Data/w Add Data
         
         using var ms = new MemoryStream(newDueListDto.Data);

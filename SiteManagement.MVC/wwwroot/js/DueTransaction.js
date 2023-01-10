@@ -26,10 +26,22 @@ function GetDueTransactions(userCode) {
             { "data": "id", "name": "Id", "autoWidth": true },
             { "data": "date", "name": "Date", "autoWidth": true },
             { "data": "detail", "name": "Detail", "autoWidth": true },
-            { "data": "debt", "name": "Debt", "autoWidth": true },
-            { "data": "credit", "name": "Credit", "autoWidth": true },
-            { "data": "balanceDebt", "name": "BalanceDebt", "autoWidth": true },
-            { "data": "balanceCredit", "name": "BalanceCredit", "autoWidth": true }
+            {
+                "data": "debt", "name": "Debt", "autoWidth": true,
+                "render": DataTable.render.number( null, null, 2, '₺' )
+            },
+            {
+                "data": "credit", "name": "Credit", "autoWidth": true,
+                "render": DataTable.render.number( null, null, 2, '₺' )
+            },
+            {
+                "data": "balanceDebt", "name": "BalanceDebt", "autoWidth": true,
+                "render": DataTable.render.number( null, null, 2, '₺' )
+            },
+            {
+                "data": "balanceCredit", "name": "BalanceCredit", "autoWidth": true,
+                "render": DataTable.render.number( null, null, 2, '₺' )
+            }
         ]
     });
 }

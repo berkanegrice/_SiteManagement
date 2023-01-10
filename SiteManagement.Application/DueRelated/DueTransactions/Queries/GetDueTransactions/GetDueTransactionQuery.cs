@@ -1,6 +1,7 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SiteManagement.Application.Common.Helper;
 using SiteManagement.Application.Common.Interfaces;
 
 namespace SiteManagement.Application.DueRelated.DueTransactions.Queries.GetDueTransactions;
@@ -43,10 +44,10 @@ public class GetDueTransactionHandler : IRequestHandler<GetDueTransactionQuery, 
                 Id = s.Id,
                 Date = s.Date,
                 Detail = s.Detail,
-                Debt = s.Debt,
-                Credit = s.Credit,
-                BalanceDebt = s.BalanceDebt,
-                BalanceCredit = s.BalanceCredit
+                Debt = s.Debt.ToDouble(),
+                Credit = s.Credit.ToDouble(),
+                BalanceDebt = s.BalanceDebt.ToDouble(),
+                BalanceCredit = s.BalanceCredit.ToDouble()
             }));
 
         #endregion

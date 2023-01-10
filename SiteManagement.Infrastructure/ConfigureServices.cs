@@ -34,7 +34,7 @@ public static class ConfigureServices
         else
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("ProductAppDb"),
+                options.UseSqlServer(configuration.GetConnectionString("DevelopmentAppDb"),
                     builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }
 

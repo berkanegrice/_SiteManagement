@@ -39,4 +39,18 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Common\Models\Identity\AccountResponse.cs" />
+      <Compile Remove="Common\Models\Identity\VerifyEmailRequest.cs" />
+      <Compile Remove="Common\Models\Identity\ValidateResetTokenRequest.cs" />
+      <Compile Remove="Common\Models\Identity\RevokeTokenRequest.cs" />
+      <Compile Remove="Common\Models\Identity\JwtSettings.cs" />
+      <Compile Remove="Common\Models\Identity\RegistrationRequest.cs" />
+      <Compile Remove="Common\Models\Identity\RegistrationResponse.cs" />
+      <Compile Remove="Common\Models\Identity\ResetPasswordRequest.cs" />
+      <Compile Remove="Common\Models\Identity\ForgotPasswordRequest.cs" />
+      <Compile Remove="Common\Models\Identity\AuthenticateResponse.cs" />
+      <Compile Remove="Common\Models\Identity\AuthenticateRequest.cs" />
+    </ItemGroup>
+
 </Project>

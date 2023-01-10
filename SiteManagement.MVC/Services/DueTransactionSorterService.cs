@@ -13,10 +13,10 @@ public class DueTransactionSorterService : DataTableService<DueTransactionDto>
     {
         value = value.Where(m => 
             // m.AccountCode.Contains(searchValue) ||
-            m.Debt.Contains(searchValue) ||
-            m.Credit.Contains(searchValue) ||
-            m.BalanceDebt.Contains(searchValue) ||
-            m.BalanceCredit.Contains(searchValue)
+            m.Debt.Equals(searchValue) ||
+            m.Credit.Equals(searchValue) ||
+            m.BalanceDebt.Equals(searchValue) ||
+            m.BalanceCredit.Equals(searchValue)
         );
 
         return value;
