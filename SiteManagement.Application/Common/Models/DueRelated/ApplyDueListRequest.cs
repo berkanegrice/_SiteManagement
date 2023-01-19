@@ -1,4 +1,4 @@
-namespace SiteManagement.Application.Common.Models;
+namespace SiteManagement.Application.Common.Models.DueRelated;
 
 public class ApplyDueListRequest
 {

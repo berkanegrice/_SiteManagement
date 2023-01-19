@@ -11,6 +11,8 @@ using SiteManagement.Application.Files.Commands.UploadFiles;
 using SiteManagement.MVC.Models;
 using SiteManagement.MVC.Services;
 
+using SiteManagement.Infrastructure.Services;
+
 namespace SiteManagement.MVC.Controllers.Due;
 
 public class DueController : Controller
@@ -23,11 +25,12 @@ public class DueController : Controller
         _currentUserService = currentUserService;
     }
 
-    public IActionResult Index(string? message, int? dueListId, string dueListType)
+    public IActionResult Index(string? message, int? listId, string listName, string listType)
     {
         TempData["Message"] = message;
-        TempData["DueListId"] = dueListId;
-        TempData["DueListType"] = dueListType;
+        TempData["ListId"] = listId;
+        TempData["ListName"] = listName;
+        TempData["ListType"] = listType;
         return View();
     }
 
@@ -62,7 +65,8 @@ public class DueController : Controller
     public async Task<IActionResult> UploadDueList(
         IFormFile file, string description)
     {
-        var dueType = description.Contains("Mizan") ? "Mizan" : "Muavin";
+        var register = description.Parser();
+        
         var res
             = await _mediator.Send(
             new UploadDueListCommand()
@@ -70,7 +74,7 @@ public class DueController : Controller
                 UploadFileCommand = new UploadFileCommand()
                 {
                     File = file,
-                    Description = description,
+                    Description = register.ToString(),
                     UploadedBy = _currentUserService.UserId!
                 },
             });
@@ -78,24 +82,44 @@ public class DueController : Controller
         return res.Success
             ? RedirectToAction("Index", new
             {
-                Message = dueType + " defteri basariyla yuklendi",
-                DueListId = res.InsertedId, 
-                DueListType = dueType
+                Message = register.ToString()  + " defteri basariyla yuklendi",
+                ListId = res.InsertedId, 
+                ListName = register.RegisterName,
+                ListType = register.RegisterType
             })
             : RedirectToAction("Error");
     }
     
     [Authorize(Roles = "SuperAdmin")]
-    public async Task<IActionResult> ApplyDueList(int dueListId, string dueListType)
+    public async Task<IActionResult> ApplyDueList(int dueListId, string listName, string listType)
     {
-        var resp = dueListType switch
+        var resp = new ResponseApplyDueListCommand();
+        switch (listType)
         {
-            "Mizan" => await _mediator.Send(new ApplyDueInfListCommand() {Id = dueListId}),
-            "Muavin" => await _mediator.Send(new ApplyDueTranListCommand() {Id = dueListId}),
-
-            _ => throw new ArgumentOutOfRangeException(nameof(dueListType), dueListType, null)
-        };
-
+            case "Mizan":
+                switch (listName)
+                {
+                    case "Sufa":
+                        break;
+                    case "Kidem":
+                        break;
+                    default:
+                        resp = await _mediator.Send(new ApplyDueInfListCommand() {Id = dueListId}); break;
+                }
+                break;
+            case "Muavin":
+                switch (listName)
+                {
+                    case "Sufa":
+                        break;
+                    case "Kidem":
+                        break;
+                    default:
+                        resp = await _mediator.Send(new ApplyDueTranListCommand() {Id = dueListId}); break;
+                }
+                break;
+        }
+        
         return resp.Status
             ? RedirectToAction("Index", new
             {

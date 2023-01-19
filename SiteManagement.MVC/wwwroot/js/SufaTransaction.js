@@ -1,6 +1,6 @@
 function GetDueTransactions(userCode) {
-    $('#dueTransactionModal').modal('show');
-    $("#DueTransactionDatatable").DataTable({
+    $('#sufaTransactionModal').modal('show');
+    $("#SufaTransactionDatatable").DataTable({
         "destroy": true,
         "processing": true,
         "serverSide": true,
@@ -8,7 +8,7 @@ function GetDueTransactions(userCode) {
         "responsive": true,
         "ajax": {
             "type": "POST",
-            "url": "/Due/GetDuesTransaction",
+            "url": "/Due/GetSufasTransaction",
             "data" : {"userCode": userCode}
         },
         "columnDefs": [

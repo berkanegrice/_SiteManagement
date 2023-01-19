@@ -1,12 +1,12 @@
 
-$("#DueInformationDatatable").DataTable({
+$("#SufaInformationDatatable").DataTable({
     "processing": true,
     "serverSide": true,
     "filter": true,
     "responsive": true,
     "ajax": {
         "type": "POST",
-        "url": "/Due/GetDuesInformation",
+        "url": "/Sufa/GetSufasInformation",
         "datatype": "json"
     },
     "columnDefs": [
@@ -43,7 +43,7 @@ $("#DueInformationDatatable").DataTable({
         },
         {
             "render": function (data, type, row, meta) {
-                return "<a class='btn btn-info' style='position:relative; left:50px;' onclick=GetDueTransactions('" + row.accountCode+ "');>Detay</a>";
+                return "<a class='btn btn-info' style='position:relative; left:50px;' onclick=GetSufaTransactions('" + row.accountCode+ "');>Detay</a>";
             }
         },
     ]

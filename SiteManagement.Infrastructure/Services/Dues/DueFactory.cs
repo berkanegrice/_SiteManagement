@@ -1,8 +1,12 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.DueRelated;
 using SiteManagement.Application.DueRelated.DueInformations.Command;
+using SiteManagement.Application.DueRelated.DueInformations.Queries.GetDueInformations;
 using SiteManagement.Domain.Entities.DuesRelated;
 using SiteManagement.Infrastructure.Services.CsvReaderHelper;
 
@@ -12,11 +16,12 @@ public class DueFactory : IDueFactory
 {
     private readonly IApplicationDbContext _context;
     private readonly IFileService _fileService;
-
-    public DueFactory(IApplicationDbContext context, IFileService fileService)
+    private readonly IMapper _mapper;
+    public DueFactory(IApplicationDbContext context, IFileService fileService, IMapper mapper)
     {
         _context = context;
         _fileService = fileService;
+        _mapper = mapper;
     }
     
     private static List<string> Cleaner(string inputDueData)
@@ -172,5 +177,11 @@ public class DueFactory : IDueFactory
         };
         
         #endregion
+    }
+
+    public async Task<IQueryable<DueInformationDto>> GetAllDueInformation()
+    {
+        return await Task.FromResult(_context.DueInformations.ProjectTo<DueInformationDto>
+            (_mapper.ConfigurationProvider));
     }
 }

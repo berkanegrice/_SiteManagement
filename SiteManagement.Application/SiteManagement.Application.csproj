@@ -20,6 +20,8 @@
     <ItemGroup>
       <Folder Include="DueRelated" />
       <Folder Include="Managements" />
+      <Folder Include="SufaRelated\SufaInformations" />
+      <Folder Include="SufaRelated\SufaTransactions\Commands" />
     </ItemGroup>
 
     <ItemGroup>

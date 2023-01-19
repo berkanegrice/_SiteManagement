@@ -36,8 +36,8 @@ public class MappingProfile : Profile
             .ForMember(dto => dto.BalanceCredit,
                 conf =>
                     conf.MapFrom(ol => ol.BalanceCredit.ToDouble()));
+       
         
-
         //TODO: This should be refactored.
         CreateMap<FileOnDatabaseModel, FileOnDataBaseDto>()
             .ForMember(dto => dto.Id,

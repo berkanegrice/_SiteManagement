@@ -8,10 +8,12 @@ namespace SiteManagement.Application.Files.Commands.UploadFiles;
 
 
 public record UploadFileCommand : IRequest<ResponseUploadFileCommand>
-{
+{  
     public string UploadedBy { get; init; }
     public IFormFile File { get; init; }
     public string Description { get; init; }
+    
+    public FileCategory FileCategory { get; set; }
 }
 
 public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, ResponseUploadFileCommand>

@@ -1,16 +1,17 @@
-using SiteManagement.Application.DueRelated.DueInformations.Queries.GetDueInformations;
+using SiteManagement.Application.SufaRelated.Queries;
+using SiteManagement.Application.SufaRelated.SufaInformations.Queries;
 
 namespace SiteManagement.MVC.Services;
 
-public class DueSorterService : DataTableService<DueInformationDto>
+public class SufaSorterService : DataTableService<SufaInformationDto>
 {
-    public DueSorterService(IFormCollection formCollection)
+    public SufaSorterService(IFormCollection formCollection)
         : base(formCollection)
     {
     }
 
-    protected override IQueryable<DueInformationDto> Searcher
-        (IQueryable<DueInformationDto> value, string searchValue)
+    protected override IQueryable<SufaInformationDto> Searcher
+        (IQueryable<SufaInformationDto> value, string searchValue)
     {
         value = value.Where(m => 
             m.LeaseHolder.Contains(searchValue) || 

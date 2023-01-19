@@ -1,6 +1,7 @@
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.DueRelated;
 
 namespace SiteManagement.Application.DueRelated.DueInformations.Command;
 

@@ -26,6 +26,26 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Views\DueTransaction\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\Components\UploadRegister\Default.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Views\Identity\Pages\Account\Login.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\Account\Logout.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\Account\Manage\Email.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\Account\Manage\Index.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\Account\Manage\PersonalData.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\Account\Manage\_Layout.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\Account\Register.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\Account\ResetPassword.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\Account\_StatusMessage.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\Account\_ViewImports.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\_ValidationScriptsPartial.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\_ViewImports.cshtml" />
+      <AdditionalFiles Include="Views\Identity\Pages\_ViewStart.cshtml" />
     </ItemGroup>
 
 </Project>
