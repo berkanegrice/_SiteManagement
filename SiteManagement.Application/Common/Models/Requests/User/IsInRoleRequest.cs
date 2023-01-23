@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace SiteManagement.Application.Common.Models;
+namespace SiteManagement.Application.Common.Models.Requests.User;
 
 public class IsInRoleRequest
 {

@@ -1,4 +1,5 @@
 using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.Misc;
 
 namespace SiteManagement.Application.Common.Interfaces;
 

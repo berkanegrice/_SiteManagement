@@ -22,7 +22,12 @@
     <form method="post" enctype="multipart/form-data">
         <input type="file" name="file" multiple required/>
         <input type="text" autocomplete="off" placeholder="Enter File Description" name="description" required/>
-        <button class="btn btn-success" type="submit" asp-controller="Report" asp-action="UploadToDatabase">Yükle</button>
+        <button class="btn btn-success" type="submit"
+                asp-controller="File"
+                asp-route-registerName="Aidat"
+                asp-action="UploadToDatabase">
+            Yükle
+        </button>
     </form>
     <hr/>
 }
@@ -56,10 +61,10 @@ else
                 <td>@file.FileType</td>
                 <td>@file.CreatedOn</td>
                 <td>
-                    <a type="button" class="btn btn-primary" asp-controller="Report" asp-action="DownloadFileFromDatabase" asp-route-id="@file.Id">Indir</a>
+                    <a type="button" class="btn btn-primary" asp-controller="File" asp-action="DownloadFileFromDatabase" asp-route-id="@file.Id">Indir</a>
                     @if ((AuthorizationService.AuthorizeAsync(User, Permissions.LeaseHolder.Create)).Result.Succeeded)
                     {
-                        <a type="button" class="btn btn-danger" asp-controller="Report" asp-action="DeleteFileFromDatabase" asp-route-id="@file.Id">Sil</a>
+                        <a type="button" class="btn btn-danger" asp-controller="File" asp-action="DeleteFileFromDatabase" asp-route-id="@file.Id">Sil</a>
                     }
                 </td>
             </tr>

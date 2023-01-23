@@ -4,28 +4,29 @@
 @model SiteManagement.MVC.Models.DueInformationVm
 @inject IAuthorizationService AuthorizationService
 
+@* *@
+@* @if ((AuthorizationService.AuthorizeAsync(User, Permissions.LeaseHolder.Create)).Result.Succeeded) *@
+@* { *@
+@*     <hr/> *@
+@*         <h4>Yeni Aidat Listesi Ekle</h4> *@
+@*         await Html.RenderPartialAsync("UploadDueList"); *@
+@*     <hr/> *@
+@* } *@
 
-@if ((AuthorizationService.AuthorizeAsync(User, Permissions.LeaseHolder.Create)).Result.Succeeded)
-{
-    <hr/>
-        <h4>Yeni Aidat Listesi Ekle</h4>
-        await Html.RenderPartialAsync("UploadDueList");
-    <hr/>
-}
+@* @if (TempData["Message"] != null) *@
+@* { *@
+@*     <div class="alert alert-success alert-dismissible" style="margin-top:20px"> *@
+@*         @TempData["Message"] *@
+@*         <span style="display:flex; justify-content:flex-end; width:100%; padding:0;"> *@
+@*             <a type="button" class="btn btn-primary"  *@
+@*                asp-controller="File"  *@
+@*                asp-action="ApplyList"  *@
+@*                asp-route-insertedId="@TempData["DueListId"]">Uygula</a> *@
+@*         </span> *@
+@*     </div> *@
+@* } *@
 
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-success alert-dismissible" style="margin-top:20px">
-        @TempData["Message"]
-        <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-            <a type="button" class="btn btn-primary" 
-               asp-controller="Due" 
-               asp-action="ApplyDueList" 
-               asp-route-dueListId="@TempData["DueListId"]"
-               asp-route-dueListType="@TempData["DueListType"]">Uygula</a>
-        </span>
-    </div>
-}
+@await Html.PartialAsync("_ApplyStatus")
 
 <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <div class="container">

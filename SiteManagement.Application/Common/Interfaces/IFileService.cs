@@ -1,4 +1,4 @@
-using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.Requests.File;
 using SiteManagement.Application.Files.Commands.UploadFiles;
 using SiteManagement.Application.Files.Queries.GetFiles;
 using SiteManagement.Application.Reports.Commands;

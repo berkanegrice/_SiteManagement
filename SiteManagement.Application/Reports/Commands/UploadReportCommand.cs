@@ -1,6 +1,8 @@
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.Requests;
+using SiteManagement.Application.Common.Models.Requests.File;
 using SiteManagement.Application.Files.Commands.UploadFiles;
 
 namespace SiteManagement.Application.Reports.Commands;
@@ -29,14 +31,14 @@ public class UploadNewsCommandHandler
             = await _fileService.UploadFile(
                 new UploadFileRequest()
                 {
-                    FormFile = uploadFile.File,
+                    File = uploadFile.File,
                     Description = uploadFile.Description,
                     UploadedBy = uploadFile.UploadedBy
                 });
 
         return new ResponseUploadFileCommand()
         {
-            Success = res.Success,
+            Status = res.Status,
             InsertedId = res.InsertedId
         };
     }

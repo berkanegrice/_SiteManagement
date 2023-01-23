@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SiteManagement.Infrastructure.Persistence.Interceptors;
+using SiteManagement.Infrastructure.Services.Applier;
 using SiteManagement.Infrastructure.Services.Dues;
 using SiteManagement.Infrastructure.Services.Managements;
 using SiteManagement.Infrastructure.Services.Misc;
@@ -46,13 +47,14 @@ public static class ConfigureServices
 
         #region Feature Services
 
-        services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<IDateTime, DateTimeService>();
+        services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<IFileService, FileService>();
         services.AddTransient<IUserFactory, UserFactory>();
         services.AddTransient<IRoleFactory, RoleFactory>();
         services.AddTransient<ISignInFactory, SignInFactory>();
         services.AddTransient<IDueFactory, DueFactory>();
+        services.AddTransient<IApplyService, ApplyService>();
 
         #endregion
 

@@ -2,6 +2,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.Requests;
+using SiteManagement.Application.Common.Models.Requests.File;
+using SiteManagement.Application.Common.Models.Requests.User;
 using SiteManagement.Application.Managements.Users.Commands.ApplyUser;
 using SiteManagement.Application.Managements.Users.Commands.UploadUser;
 using SiteManagement.Domain.Entities;
@@ -30,14 +33,14 @@ public class UserFactory : IUserFactory
     {
         var res = await _fileService.UploadFile(new UploadFileRequest()
         {
-            FormFile = request.FormFile,
+            File = request.File,
             Description = request.Description,
             UploadedBy = request.UploadedBy
         });
 
         return new ResponseUploadUserListCommand
         {
-            Success = res.Success,
+            Status = res.Status,
             InsertedId = res.InsertedId
         };
     }

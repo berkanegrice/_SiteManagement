@@ -1,6 +1,8 @@
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.Requests;
+using SiteManagement.Application.Common.Models.Requests.File;
 using SiteManagement.Application.Files.Commands.UploadFiles;
 
 namespace SiteManagement.Application.Managements.Users.Commands.UploadUser;
@@ -27,7 +29,7 @@ public class UploadUserListCommandHandler
     {
         return await _userFactory.UploadUserList(new UploadFileRequest()
         {
-            FormFile = request.UploadFileCommand.File,
+            File = request.UploadFileCommand.File,
             Description = request.UploadFileCommand.Description,
             UploadedBy = request.UploadFileCommand.UploadedBy
         });

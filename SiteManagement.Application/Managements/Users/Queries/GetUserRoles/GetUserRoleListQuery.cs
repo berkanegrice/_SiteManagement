@@ -1,6 +1,8 @@
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.Requests;
+using SiteManagement.Application.Common.Models.Requests.User;
 
 namespace SiteManagement.Application.Managements.Users.Queries.GetUserRoles;
 

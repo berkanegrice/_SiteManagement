@@ -55,7 +55,7 @@ public class UserController : Controller
             }
         });
         
-        return res!.Success
+        return res!.Status
             ? RedirectToAction("Index", new
             {
                 Message = "Kullanici listesi basariyla yuklendi",

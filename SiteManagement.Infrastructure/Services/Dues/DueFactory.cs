@@ -1,14 +1,17 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Models;
-using SiteManagement.Application.Common.Models.DueRelated;
 using SiteManagement.Application.DueRelated.DueInformations.Command;
 using SiteManagement.Application.DueRelated.DueInformations.Queries.GetDueInformations;
 using SiteManagement.Domain.Entities.DuesRelated;
 using SiteManagement.Infrastructure.Services.CsvReaderHelper;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using SiteManagement.Application.Common.Models.Requests;
+using SiteManagement.Application.Common.Models.Requests.File;
+using SiteManagement.Application.Common.Models.Requests.Register;
+using SiteManagement.Application.DueRelated.DueInformations.Response;
 
 namespace SiteManagement.Infrastructure.Services.Dues;
 
@@ -17,7 +20,8 @@ public class DueFactory : IDueFactory
     private readonly IApplicationDbContext _context;
     private readonly IFileService _fileService;
     private readonly IMapper _mapper;
-    public DueFactory(IApplicationDbContext context, IFileService fileService, IMapper mapper)
+    public DueFactory(
+        IApplicationDbContext context, IFileService fileService, IMapper mapper)
     {
         _context = context;
         _fileService = fileService;
@@ -51,7 +55,6 @@ public class DueFactory : IDueFactory
 
         return cleaned;
     }
-    
     private static List<DueTransaction> Process(string rawDueData)
     {
         var cleaned = Cleaner(rawDueData);
@@ -73,7 +76,8 @@ public class DueFactory : IDueFactory
             .ToList();
     }
     
-    public async Task<ResponseApplyDueListCommand> ApplyDueInfList(ApplyDueListRequest applyUserListRequest)
+    public async Task<ResponseApplyRegisterCommand>
+        ApplyDueInfList(ApplyRegisterRequest applyUserListRequest)
     {
         #region Fetch Data
 
@@ -120,7 +124,7 @@ public class DueFactory : IDueFactory
 
         #region Return Response
 
-        return new ResponseApplyDueListCommand()
+        return new ResponseApplyRegisterCommand()
         {
             Status = await _context.SaveChangesAsync(default) > 0,
             Type = "Mizan",
@@ -129,7 +133,8 @@ public class DueFactory : IDueFactory
         #endregion
     }
 
-    public async Task<ResponseApplyDueListCommand> ApplyDueTransList(ApplyDueListRequest applyUserListRequest)
+    public async Task<ResponseApplyRegisterCommand> 
+        ApplyDueTransList(ApplyRegisterRequest applyUserListRequest)
     {
         #region Fetch Data
 
@@ -170,7 +175,7 @@ public class DueFactory : IDueFactory
         
         #region Return Response
 
-        return new ResponseApplyDueListCommand()
+        return new ResponseApplyRegisterCommand()
         {
             Status = await _context.SaveChangesAsync(default) > 0,
             Type = "Muavin",

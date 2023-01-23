@@ -1,3 +1,5 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SiteManagement.Domain.Entities.Enums
 @model UploadRegisterViewModel
 
 @{
@@ -5,23 +7,35 @@
     Layout = "_Layout";
 }
 
-<div class="text-center">  
-    <h1 class="display-4">Employee Dropdown</h1>  
-  
-    <form asp-action="FileItemDropdown" asp-controller="File" method="post">  
-  
-        <div class="row">  
-            <div class="col-md-4">  
-                <select id="drpEmpList" class="form-control" asp-for="EmployeeId" asp-items="@(new SelectList(Model.UploadRegisterList, "Value", "Text"))">  
-                    <option value="">--Select--</option>  
-                </select>  
-                <input type="hidden" asp-for="EmployeeId" />  
-                 
-            </div>  
-            <div class="col-md-2">  
-                <input type="submit" name="btnSubmit" value="Submit" class="btn btn-success" />  
-            </div>  
-        </div>  
-  
-    </form>  
-</div>  
+@await Html.PartialAsync("_ApplyStatus")
+
+@* @if (TempData["Message"] != null) *@
+@* { *@
+@*     <div class="alert alert-success alert-dismissible" style="margin-top:20px"> *@
+@*         @TempData["Message"] *@
+@*         <span style="display:flex; justify-content:flex-end; width:100%; padding:0;"> *@
+@*             <a type="button" class="btn btn-primary"  *@
+@*                asp-controller="File"  *@
+@*                asp-action="ApplyList"  *@
+@*                asp-route-insertedId="@TempData["InsertedId"]">Uygula</a> *@
+@*         </span> *@
+@*     </div> *@
+@* } *@
+
+
+<h4>Dosya yükleme</h4>
+<hr/>
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="file" multiple required/>
+    <input type="text" autocomplete="off" placeholder="Enter File Description" name="description"/>
+    <select asp-for="RegisterName" asp-items="Html.GetEnumSelectList<RegisterName>()">
+        <option selected="selected" value="">Defter ismi</option>
+    </select>
+    <select asp-for="RegisterType" asp-items="Html.GetEnumSelectList<RegisterType>()">
+        <option selected="selected" value="">Defter Tipi</option>
+    </select>
+    <button class="btn btn-success pull-right"  type="submit" asp-controller="File" asp-action="UploadToDatabase">Yükle</button>
+</form>
+<hr/>
+
+

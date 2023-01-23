@@ -3,7 +3,9 @@
   &lt;Assembly Path="/home/berkan/.nuget/packages/mediatr.contracts/1.0.1/lib/netstandard2.0/MediatR.Contracts.dll" /&gt;
   &lt;Assembly Path="/usr/share/dotnet/packs/Microsoft.AspNetCore.App.Ref/6.0.3/ref/net6.0/Microsoft.Extensions.Configuration.Abstractions.dll" /&gt;
 &lt;/AssemblyExplorer&gt;</s:String>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=defteri/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Dtos/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=eklendi/@EntryIndexedValue">True</s:Boolean>
 	
 	
 	

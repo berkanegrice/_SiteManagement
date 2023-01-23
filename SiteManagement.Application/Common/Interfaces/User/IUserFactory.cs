@@ -1,6 +1,9 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.Requests;
+using SiteManagement.Application.Common.Models.Requests.File;
+using SiteManagement.Application.Common.Models.Requests.User;
 using SiteManagement.Application.Managements.Users.Commands;
 using SiteManagement.Application.Managements.Users.Commands.ApplyUser;
 using SiteManagement.Application.Managements.Users.Commands.UploadUser;

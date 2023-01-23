@@ -1,6 +1,7 @@
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
-using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.Requests.File;
+using SiteManagement.Application.DueRelated.DueInformations.Response;
 using SiteManagement.Application.Files.Commands.UploadFiles;
 
 namespace SiteManagement.Application.DueRelated.DueInformations.Command;
@@ -30,14 +31,14 @@ public class UploadDueListCommandHandler
             = await _fileService.UploadFile(
                 new UploadFileRequest()
                 {
-                    FormFile = uploadFile.File,
+                    File = uploadFile.File,
                     Description = uploadFile.Description,
                     UploadedBy = uploadFile.UploadedBy
                 });
 
         return new ResponseUploadDueListCommand()
         {
-            Success = res.Success,
+            Status = res.Status,
             InsertedId = res.InsertedId
         };
     }

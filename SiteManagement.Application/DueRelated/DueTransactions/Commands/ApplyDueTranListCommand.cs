@@ -1,19 +1,21 @@
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Models;
-using SiteManagement.Application.Common.Models.DueRelated;
+using SiteManagement.Application.Common.Models.Requests;
+using SiteManagement.Application.Common.Models.Requests.Register;
 using SiteManagement.Application.DueRelated.DueInformations.Command;
+using SiteManagement.Application.DueRelated.DueInformations.Response;
 
 namespace SiteManagement.Application.DueRelated.DueTransactions.Commands;
 
 public record ApplyDueTranListCommand
-    : IRequest<ResponseApplyDueListCommand>
+    : IRequest<ResponseApplyRegisterCommand>
 {
     public int Id { get; init; }
 }
 
 public class ApplyDueTranListCommandHandler
-    : IRequestHandler<ApplyDueTranListCommand, ResponseApplyDueListCommand>
+    : IRequestHandler<ApplyDueTranListCommand, ResponseApplyRegisterCommand>
 {
     private readonly IDueFactory _dueFactory;
 
@@ -22,11 +24,11 @@ public class ApplyDueTranListCommandHandler
         _dueFactory = dueFactory;
     }
     
-    public async Task<ResponseApplyDueListCommand>
+    public async Task<ResponseApplyRegisterCommand>
         Handle(ApplyDueTranListCommand request, CancellationToken cancellationToken)
     {
         return await _dueFactory.ApplyDueTransList(
-            new ApplyDueListRequest()
+            new ApplyRegisterRequest()
             {
                 Id = request.Id
             });

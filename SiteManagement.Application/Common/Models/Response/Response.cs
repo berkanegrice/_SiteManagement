@@ -1,6 +1,6 @@
-namespace SiteManagement.Application.DueRelated.DueInformations.Command;
+namespace SiteManagement.Application.Common.Models.Response;
 
-public class ResponseApplyDueListCommand
+public abstract class Response
 {
     public bool Status { get; set; }
     public int InsertedId { get; set; }

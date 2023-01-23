@@ -1,18 +1,20 @@
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Models;
-using SiteManagement.Application.Common.Models.DueRelated;
+using SiteManagement.Application.Common.Models.Requests;
+using SiteManagement.Application.Common.Models.Requests.Register;
+using SiteManagement.Application.DueRelated.DueInformations.Response;
 
 namespace SiteManagement.Application.DueRelated.DueInformations.Command;
 
 public record ApplyDueInfListCommand
-    : IRequest<ResponseApplyDueListCommand>
+    : IRequest<ResponseApplyRegisterCommand>
 {
     public int Id { get; init; }
 }
 
 public class ApplyDueListCommandHandler
-    : IRequestHandler<ApplyDueInfListCommand, ResponseApplyDueListCommand>
+    : IRequestHandler<ApplyDueInfListCommand, ResponseApplyRegisterCommand>
 {
     private readonly IDueFactory _dueFactory;
 
@@ -21,11 +23,11 @@ public class ApplyDueListCommandHandler
         _dueFactory = dueFactory;
     }
     
-    public async Task<ResponseApplyDueListCommand>
+    public async Task<ResponseApplyRegisterCommand>
         Handle(ApplyDueInfListCommand request, CancellationToken cancellationToken)
     {
         return await _dueFactory.ApplyDueInfList(
-            new ApplyDueListRequest()
+            new ApplyRegisterRequest()
         {
             Id = request.Id
         });
