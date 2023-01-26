@@ -13,7 +13,7 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         #region Mapps
-        
+
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
         CreateMap<DueInformation, DueInformationDto>()

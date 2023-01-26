@@ -1,5 +1,6 @@
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
+using SiteManagement.Application.Common.Interfaces.Due;
 using SiteManagement.Application.Common.Models;
 using SiteManagement.Application.Common.Models.Requests;
 using SiteManagement.Application.Common.Models.Requests.Register;
@@ -17,17 +18,17 @@ public record ApplyDueTranListCommand
 public class ApplyDueTranListCommandHandler
     : IRequestHandler<ApplyDueTranListCommand, ResponseApplyRegisterCommand>
 {
-    private readonly IDueFactory _dueFactory;
+    private readonly IRegisterFactory _registerFactory;
 
-    public ApplyDueTranListCommandHandler(IDueFactory dueFactory)
+    public ApplyDueTranListCommandHandler(IRegisterFactory registerFactory)
     {
-        _dueFactory = dueFactory;
+        _registerFactory = registerFactory;
     }
     
     public async Task<ResponseApplyRegisterCommand>
         Handle(ApplyDueTranListCommand request, CancellationToken cancellationToken)
     {
-        return await _dueFactory.ApplyDueTransList(
+        return await _registerFactory.ApplyRegisterTransList(
             new ApplyRegisterRequest()
             {
                 Id = request.Id

@@ -3,9 +3,8 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Constants;
-using SiteManagement.Application.SufaRelated.SufaInformations.Queries;
 
-namespace SiteManagement.Application.SufaRelated.Queries;
+namespace SiteManagement.Application.SufaRelated.SufaInformations.Queries;
 
 public record GetSufaInformationQuery : IRequest<IQueryable<SufaInformationDto>>
 {
@@ -19,7 +18,8 @@ public class GetSufaInformationQueryHandler : IRequestHandler<GetSufaInformation
     private readonly IMapper _mapper;
     private readonly IIdentityService _identityService;
 
-    public GetSufaInformationQueryHandler(IApplicationDbContext context, IMapper mapper, IIdentityService identityService)
+    public GetSufaInformationQueryHandler(IApplicationDbContext context, IMapper mapper,
+        IIdentityService identityService)
     {
         _context = context;
         _mapper = mapper;
@@ -31,27 +31,27 @@ public class GetSufaInformationQueryHandler : IRequestHandler<GetSufaInformation
     {
         #region Detect Roles
 
-        var isSuperAdmin = await _identityService.IsInRoleAsync(request.UserId, 
+        var isSuperAdmin = await _identityService.IsInRoleAsync(request.UserId,
                 ApplicationRoles.SuperAdmin.ToString())
             .ConfigureAwait(false);
 
-        var isAdmin = await _identityService.IsInRoleAsync(request.UserId, 
+        var isAdmin = await _identityService.IsInRoleAsync(request.UserId,
                 ApplicationRoles.Admin.ToString())
             .ConfigureAwait(false);
-        
+
         var userEmail = await _identityService.GetUserEmailAsync(request.UserId)
             .ConfigureAwait(false);
 
         #endregion
 
         #region Fetch Data
-        
-        var sufaInformationDto = 
+
+        var sufaInformationDto =
             _context.DueInformations
-                .Where(x => x.AccountCode > 1301000)
+                .Where(x => x.AccountCode > 13201000)
                 .ProjectTo<SufaInformationDto>(_mapper.ConfigurationProvider);
-        
-        if (isSuperAdmin || isAdmin) 
+
+        if (isSuperAdmin || isAdmin)
             return sufaInformationDto;
         return sufaInformationDto.Where(x => x.Email == userEmail);
 

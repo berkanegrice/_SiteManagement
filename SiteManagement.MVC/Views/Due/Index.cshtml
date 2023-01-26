@@ -4,29 +4,7 @@
 @model SiteManagement.MVC.Models.DueInformationVm
 @inject IAuthorizationService AuthorizationService
 
-@* *@
-@* @if ((AuthorizationService.AuthorizeAsync(User, Permissions.LeaseHolder.Create)).Result.Succeeded) *@
-@* { *@
-@*     <hr/> *@
-@*         <h4>Yeni Aidat Listesi Ekle</h4> *@
-@*         await Html.RenderPartialAsync("UploadDueList"); *@
-@*     <hr/> *@
-@* } *@
-
-@* @if (TempData["Message"] != null) *@
-@* { *@
-@*     <div class="alert alert-success alert-dismissible" style="margin-top:20px"> *@
-@*         @TempData["Message"] *@
-@*         <span style="display:flex; justify-content:flex-end; width:100%; padding:0;"> *@
-@*             <a type="button" class="btn btn-primary"  *@
-@*                asp-controller="File"  *@
-@*                asp-action="ApplyList"  *@
-@*                asp-route-insertedId="@TempData["DueListId"]">Uygula</a> *@
-@*         </span> *@
-@*     </div> *@
-@* } *@
-
-@await Html.PartialAsync("_ApplyStatus")
+@* @await Html.PartialAsync("_ApplyStatus") *@
 
 <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <div class="container">
@@ -54,6 +32,6 @@
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.11.5/dataRender/datetime.js"></script>
-    <script src="~/js/DueInformation.js"></script>
-    <script src="~/js/DueTransaction.js"></script>
+    <script src="~/js/Due/DueInformation.js"></script>
+    <script src="~/js/Due/DueTransaction.js"></script>
 }

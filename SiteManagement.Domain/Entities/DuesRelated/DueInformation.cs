@@ -8,6 +8,6 @@ public class DueInformation : BaseAuditableEntity
     public string? BalanceDebt { get; set; }
     public string? BalanceCredit { get; set; }
     public int AccountCode { get; set; }
-    public User User { get; set; }
+    public ICollection<User> Users { get; set; }
     public ICollection<DueTransaction> Transactions { get; set; }
 }

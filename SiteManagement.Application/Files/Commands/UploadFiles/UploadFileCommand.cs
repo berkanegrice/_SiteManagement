@@ -34,7 +34,8 @@ public class UploadFileCommandHandler
         {
             File = request.File,
             Description = request.Description,
-            UploadedBy = request.UploadedBy
+            UploadedBy = request.UploadedBy,
+            FileType = request.FileType
         });
 
         // var fileName = Path.GetFileNameWithoutExtension(request.File.FileName);

@@ -1,14 +1,12 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using SiteManagement.Application.Common.Interfaces;
-using SiteManagement.Application.Common.Models;
-using SiteManagement.Application.Common.Models.Requests;
+using SiteManagement.Application.Common.Interfaces.User;
 using SiteManagement.Application.Common.Models.Requests.File;
 using SiteManagement.Application.Common.Models.Requests.User;
 using SiteManagement.Application.Managements.Users.Commands.ApplyUser;
 using SiteManagement.Application.Managements.Users.Commands.UploadUser;
 using SiteManagement.Domain.Entities;
-using SiteManagement.Infrastructure.Persistence;
 using SiteManagement.Infrastructure.Persistence.Constants;
 using SiteManagement.Infrastructure.Services.CsvReaderHelper;
 
@@ -22,7 +20,7 @@ public class UserFactory : IUserFactory
 
     public UserFactory(IFileService fileService,
         UserManager<IdentityUser> userManager,
-        ApplicationDbContext context)
+        IApplicationDbContext context)
     {
         _fileService = fileService;
         _userManager = userManager;

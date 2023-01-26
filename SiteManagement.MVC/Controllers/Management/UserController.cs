@@ -25,10 +25,10 @@ public class UserController : Controller
         _currentUserService = currentUserService;
     }
 
-    public async Task<IActionResult> Index(string? message, int userListId)
+    public async Task<IActionResult> Index(string? message, int insertedId)
     {
         TempData["Message"] = message;
-        TempData["UserListId"] = userListId;
+        TempData["InsertedId"] = insertedId;
         var userList =
             await _mediator.Send(
                 new GetUserListQuery { UserId = _currentUserService.UserId });
@@ -44,22 +44,20 @@ public class UserController : Controller
     [HttpPost]
     public async Task<IActionResult> UploadUserList(IFormFile file, string description)
     {
-        var res = await _mediator.Send(
-            new UploadUserListCommand()
+        const string registerName = "UserList";
+        var resp = await _mediator.Send(new UploadFileCommand()
         {
-            UploadFileCommand = new UploadFileCommand()
-            {
-                File = file,
-                Description = description,
-                UploadedBy = _currentUserService.UserId!
-            }
+            File = file,
+            Description = description,
+            FileType = registerName,
+            UploadedBy = _currentUserService.UserId!
         });
-        
-        return res!.Status
+
+        return resp.Status
             ? RedirectToAction("Index", new
             {
-                Message = "Kullanici listesi basariyla yuklendi",
-                UserListId = res.InsertedId
+                Message = $"{registerName} eklendi",
+                InsertedId = resp.InsertedId
             })
             : RedirectToAction("Error");
     }

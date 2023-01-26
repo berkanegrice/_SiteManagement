@@ -8,7 +8,7 @@ namespace SiteManagement.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
-    DbSet<User> Users { get; set; }
+    DbSet<Domain.Entities.User> Users { get; set; }
     DbSet<DueTransaction> DueTransactions { get; set; }
     DbSet<DueInformation> DueInformations { get; set; }
     DbSet<FileOnDatabaseModel> FilesOnDatabase { get; set; }

@@ -1,5 +1,6 @@
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
+using SiteManagement.Application.Common.Interfaces.Due;
 using SiteManagement.Application.Common.Models;
 using SiteManagement.Application.Common.Models.Requests;
 using SiteManagement.Application.Common.Models.Requests.Register;
@@ -16,17 +17,17 @@ public record ApplyDueInfListCommand
 public class ApplyDueListCommandHandler
     : IRequestHandler<ApplyDueInfListCommand, ResponseApplyRegisterCommand>
 {
-    private readonly IDueFactory _dueFactory;
+    private readonly IRegisterFactory _registerFactory;
 
-    public ApplyDueListCommandHandler(IDueFactory dueFactory)
+    public ApplyDueListCommandHandler(IRegisterFactory registerFactory)
     {
-        _dueFactory = dueFactory;
+        _registerFactory = registerFactory;
     }
     
     public async Task<ResponseApplyRegisterCommand>
         Handle(ApplyDueInfListCommand request, CancellationToken cancellationToken)
     {
-        return await _dueFactory.ApplyDueInfList(
+        return await _registerFactory.ApplyRegisterInfList(
             new ApplyRegisterRequest()
         {
             Id = request.Id
