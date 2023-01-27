@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SiteManagement.Domain.Entities;
-using SiteManagement.Domain.Entities.DuesRelated;
 using SiteManagement.Domain.Entities.FileRelated;
+using SiteManagement.Domain.Entities.RegisterRelated;
 using SiteManagement.Infrastructure.Common;
 
 namespace SiteManagement.Infrastructure.Persistence;
 
-public class ApplicationDbContext : IdentityDbContext<IdentityUser>, IApplicationDbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private readonly IMediator _mediator;
     private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
@@ -33,18 +33,59 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>, IApplicatio
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     
         base.OnModelCreating(builder);
-    
+
         builder.Entity<User>()
-            .HasOne(u => u.Due)
-            .WithOne(d => d.User)
-            .HasPrincipalKey<User>(u => u.UserCode)
-            .HasForeignKey<DueInformation>(d => d.AccountCode);
-    
-        builder.Entity<DueInformation>()
-            .HasMany(di => di.Transactions)
-            .WithOne(di => di.DueInformation)
-            .HasPrincipalKey(di=> di.AccountCode)
+            .HasMany(t => t.RegisterInformations)
+            .WithMany(t => t.Users)
+            .UsingEntity(j => j.ToTable("UserRegister"));
+        
+        builder.Entity<RegisterInformation>()
+            .HasMany(di => di.RegisterTransactions)
+            .WithOne(di => di.RegisterInformation)
             .HasForeignKey(dt => dt.AccountCode);
+        
+        
+        // builder.Entity<User>()
+        //     .HasMany<RegisterInformation>(s => s.RegisterInformations)
+        //     .WithMany(c => c.Users)
+        //     .Map(cs =>
+        //     {
+        //         cs.MapLeftKey("UserRefId");
+        //         cs.MapRightKey("RegisterInformationRefId");
+        //         cs.ToTable("UserRegister");
+        //     });
+        
+        
+        // builder.Entity<Student>()
+        //     .HasMany<Course>(s => s.Courses)
+        //     .WithMany(c => c.Students)
+        //     .Map(cs =>
+        //     {
+        //         cs.MapLeftKey("StudentRefId");
+        //         cs.MapRightKey("CourseRefId");
+        //         cs.ToTable("StudentCourse");
+        //     });
+        
+        // builder.Entity<RegisterInformation>()
+        //     .HasOne<User>(s => s.User)
+        //     .WithMany(g => g.RegisterInformations)
+        //     .HasForeignKey(s => s.UserRegisterId);
+        //
+
+        
+        
+        
+        // builder.Entity<User>()
+        //     .HasOne(u => u.Due)
+        //     .WithOne(d => d.User)
+        //     .HasPrincipalKey<User>(u => u.UserCode)
+        //     .HasForeignKey<DueInformation>(d => d.AccountCode);
+        //
+        // builder.Entity<DueInformation>()
+        //     .HasMany(di => di.Transactions)
+        //     .WithOne(di => di.DueInformation)
+        //     .HasPrincipalKey(di=> di.AccountCode)
+        //     .HasForeignKey(dt => dt.AccountCode);
     
         // builder.ApplyConfiguration(new RoleConfiguration());
         // builder.ApplyConfiguration(new UserConfiguration());
@@ -54,10 +95,14 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>, IApplicatio
     {
         optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
     }
-    public new DbSet<User> Users { get; set; }
-    public DbSet<DueTransaction> DueTransactions { get; set; }
-    public DbSet<DueInformation> DueInformations { get; set; }
+
+    public DbSet<User> Users { get; set; }
+    
+    public DbSet<RegisterTransaction> RegisterTransactions { get; set; }
+    
+    public DbSet<RegisterInformation> RegisterInformations { get; set; }
     public DbSet<FileOnDatabaseModel> FilesOnDatabase { get; set; }
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         await _mediator.DispatchDomainEvents(this);

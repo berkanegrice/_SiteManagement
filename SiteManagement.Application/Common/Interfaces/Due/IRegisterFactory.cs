@@ -8,5 +8,4 @@ public interface IRegisterFactory
 {
     Task<ResponseApplyRegisterCommand> ApplyRegisterInfList(ApplyRegisterRequest request);
     Task<ResponseApplyRegisterCommand> ApplyRegisterTransList(ApplyRegisterRequest request);
-    Task<IQueryable<DueInformationDto>> GetAllDueInformation();
 }

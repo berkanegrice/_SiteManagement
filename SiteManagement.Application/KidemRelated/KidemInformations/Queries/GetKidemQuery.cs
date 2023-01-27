@@ -29,32 +29,34 @@ public class GetKidemInformationQueryHandler : IRequestHandler<GetKidemInformati
     public async Task<IQueryable<KidemInformationDto>>
         Handle(GetKidemInformationQuery request, CancellationToken cancellationToken)
     {
-        #region Detect Roles
-
-        var isSuperAdmin = await _identityService.IsInRoleAsync(request.UserId,
-                ApplicationRoles.SuperAdmin.ToString())
-            .ConfigureAwait(false);
-
-        var isAdmin = await _identityService.IsInRoleAsync(request.UserId,
-                ApplicationRoles.Admin.ToString())
-            .ConfigureAwait(false);
-
-        var userEmail = await _identityService.GetUserEmailAsync(request.UserId)
-            .ConfigureAwait(false);
-
-        #endregion
-
-        #region Fetch Data
-
-        var sufaInformationDto =
-            _context.DueInformations
-                .Where(x => x.AccountCode > 13301000)
-                .ProjectTo<KidemInformationDto>(_mapper.ConfigurationProvider);
-
-        if (isSuperAdmin || isAdmin)
-            return sufaInformationDto;
-        return sufaInformationDto.Where(x => x.Email == userEmail);
-
-        #endregion
+        // #region Detect Roles
+        //
+        // var isSuperAdmin = await _identityService.IsInRoleAsync(request.UserId,
+        //         ApplicationRoles.SuperAdmin.ToString())
+        //     .ConfigureAwait(false);
+        //
+        // var isAdmin = await _identityService.IsInRoleAsync(request.UserId,
+        //         ApplicationRoles.Admin.ToString())
+        //     .ConfigureAwait(false);
+        //
+        // var userEmail = await _identityService.GetUserEmailAsync(request.UserId)
+        //     .ConfigureAwait(false);
+        //
+        // #endregion
+        //
+        // #region Fetch Data
+        //
+        // var sufaInformationDto =
+        //     _context.DueInformations
+        //         .Where(x => x.AccountCode > 13301000)
+        //         .ProjectTo<KidemInformationDto>(_mapper.ConfigurationProvider);
+        //
+        // if (isSuperAdmin || isAdmin)
+        //     return sufaInformationDto;
+        // return sufaInformationDto.Where(x => x.Email == userEmail);
+        //
+        // #endregion
+        
+        throw new NotImplementedException();
     }
 }

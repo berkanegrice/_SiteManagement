@@ -1,6 +1,7 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Constants;
 
@@ -29,30 +30,48 @@ public class GetDueInformationHandler : IRequestHandler<GetDueInformationQuery, 
         CancellationToken cancellationToken)
     {
         #region Detect Roles
-
+        
         var isSuperAdmin = await _identityService.IsInRoleAsync(request.UserId, 
                 ApplicationRoles.SuperAdmin.ToString())
             .ConfigureAwait(false);
-
+        
         var isAdmin = await _identityService.IsInRoleAsync(request.UserId, 
                 ApplicationRoles.Admin.ToString())
             .ConfigureAwait(false);
         
         var userEmail = await _identityService.GetUserEmailAsync(request.UserId)
             .ConfigureAwait(false);
-
+        
         #endregion
-
+        
+        
         #region Fetch Data
         
-        var dueInformationDto = 
-            _context.DueInformations.ProjectTo<DueInformationDto>
-                (_mapper.ConfigurationProvider);
+        // TODO: Fix Automapper for DueTransaction.
         
-        if (isSuperAdmin || isAdmin) 
-            return dueInformationDto;
-        return dueInformationDto.Where(x => x.Email == userEmail);
-
+        _context.RegisterInformations
+            .Include(x => x.Users)
+            
+            
+            
+            
+        
         #endregion
+
+        
+        //
+        // #region Fetch Data
+        //
+        // var dueInformationDto = 
+        //     _context.DueInformations.ProjectTo<DueInformationDto>
+        //         (_mapper.ConfigurationProvider);
+        //
+        // if (isSuperAdmin || isAdmin) 
+        //     return dueInformationDto;
+        // return dueInformationDto.Where(x => x.Email == userEmail);
+        //
+        // #endregion
+        
+        throw new NotImplementedException();
     }
 }

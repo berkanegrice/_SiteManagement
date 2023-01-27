@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Infrastructure.Identity;
 using SiteManagement.Infrastructure.Persistence;
-using SiteManagement.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,8 +36,14 @@ public static class ConfigureServices
         else
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DevelopmentAppDb"),
-                    builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                options.UseSqlite(configuration.GetConnectionString("Dev_ApplicationDb"),
+                    builder
+                        => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+
+            services.AddDbContext<IdentityContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("Dev_IdentityDb"),
+                    builder
+                        => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
@@ -70,7 +75,7 @@ public static class ConfigureServices
         
         services.AddIdentity<IdentityUser, IdentityRole>()
             .AddDefaultUI()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddEntityFrameworkStores<IdentityContext>()
             .AddDefaultTokenProviders();
         
         return services;

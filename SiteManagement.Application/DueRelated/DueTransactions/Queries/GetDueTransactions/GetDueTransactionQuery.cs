@@ -27,29 +27,31 @@ public class GetDueTransactionHandler : IRequestHandler<GetDueTransactionQuery, 
     public Task<IQueryable<DueTransactionDto>> Handle(GetDueTransactionQuery request, 
         CancellationToken cancellationToken)
     {
-        #region Fetch Data
+        // #region Fetch Data
+        //
+        // // TODO: Fix Automapper for DueTransaction.
+        // // return Task.FromResult(
+        // //         _context.DueInformations.
+        // //             Where(x => x.AccountCode == request.UserCode)
+        // //             .ProjectTo<DueTransactionDto>(_mapper.ConfigurationProvider));
+        //
+        // return Task.FromResult(_context
+        //     .DueTransactions
+        //     .Include(dt => dt.RegisterInformation)
+        //     .Where(x => x.AccountCode == request.UserCode)
+        //     .Select(s => new DueTransactionDto()
+        //     {
+        //         Id = s.Id,
+        //         Date = s.Date,
+        //         Detail = s.Detail,
+        //         Debt = s.Debt.ToDouble(),
+        //         Credit = s.Credit.ToDouble(),
+        //         BalanceDebt = s.BalanceDebt.ToDouble(),
+        //         BalanceCredit = s.BalanceCredit.ToDouble()
+        //     }));
+        //
+        // #endregion
         
-        // TODO: Fix Automapper for DueTransaction.
-        // return Task.FromResult(
-        //         _context.DueInformations.
-        //             Where(x => x.AccountCode == request.UserCode)
-        //             .ProjectTo<DueTransactionDto>(_mapper.ConfigurationProvider));
-
-        return Task.FromResult(_context
-            .DueTransactions
-            .Include(dt => dt.DueInformation)
-            .Where(x => x.AccountCode == request.UserCode)
-            .Select(s => new DueTransactionDto()
-            {
-                Id = s.Id,
-                Date = s.Date,
-                Detail = s.Detail,
-                Debt = s.Debt.ToDouble(),
-                Credit = s.Credit.ToDouble(),
-                BalanceDebt = s.BalanceDebt.ToDouble(),
-                BalanceCredit = s.BalanceCredit.ToDouble()
-            }));
-
-        #endregion
+        throw new NotImplementedException();
     }
 }

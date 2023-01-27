@@ -45,66 +45,67 @@ public class UserFactory : IUserFactory
 
     public async Task<ResponseApplyUserListCommand> ApplyUserList(ApplyUserListRequest request)
     {
-        #region Fetch Data
-
-        var newUserListDto = await _fileService
-            .FetchFileById(new FetchFileRequest()
-            {
-                Id = request.Id
-            });
-        
-        #endregion
-
-        #region Add to IdentityUser Table
-
-        var usersOnCsv = Serializer<UserOnCsv>
-            .Deserialize(newUserListDto.Data);
-
-        foreach (var userOnCsv in usersOnCsv)
-        {
-            var us = new UserModel(userOnCsv);
-            var defaultUser = new IdentityUser
-            {
-                UserName = us.Email,
-                Email = us.Email,
-                PhoneNumber = us.PhoneNumber,
-                EmailConfirmed = true,
-                PhoneNumberConfirmed = true,
-            };
-
-            if (!_userManager.Users.All(u => u.Id != defaultUser.Id)) continue;
-            var user = await _userManager.FindByEmailAsync(defaultUser.Email);
-            if (user != null) continue;
-            await _userManager.CreateAsync(defaultUser, "123Pa$$word!");
-            await _userManager.AddToRoleAsync(defaultUser, Roles.Basic.ToString());
-        }
-
-        #endregion
-
-        #region Add to Users table
-
-        // TODO Refactor this. It's require for now because some user has a multiple property.
-        foreach (var userOnCsv in usersOnCsv)
-        {
-            var us = new UserModel(userOnCsv);
-            _context.Users.Add(new User()
-            {
-                UserCode = us.UserCode,
-                UserName = us.UserName,
-                PhoneNumber = us.Email,
-                Email = us.Email,
-                Address = us.Address,
-                Created = DateTime.Now
-            });
-        }
-
-        #endregion
-        
-        await _context.SaveChangesAsync(default);
-        return new ResponseApplyUserListCommand()
-        {
-            Status = true
-        };
+        // #region Fetch Data
+        //
+        // var newUserListDto = await _fileService
+        //     .FetchFileById(new FetchFileRequest()
+        //     {
+        //         Id = request.Id
+        //     });
+        //
+        // #endregion
+        //
+        // #region Add to IdentityUser Table
+        //
+        // var usersOnCsv = Serializer<UserOnCsv>
+        //     .Deserialize(newUserListDto.Data);
+        //
+        // foreach (var userOnCsv in usersOnCsv)
+        // {
+        //     var us = new UserModel(userOnCsv);
+        //     var defaultUser = new IdentityUser
+        //     {
+        //         UserName = us.Email,
+        //         Email = us.Email,
+        //         PhoneNumber = us.PhoneNumber,
+        //         EmailConfirmed = true,
+        //         PhoneNumberConfirmed = true,
+        //     };
+        //
+        //     if (!_userManager.Users.All(u => u.Id != defaultUser.Id)) continue;
+        //     var user = await _userManager.FindByEmailAsync(defaultUser.Email);
+        //     if (user != null) continue;
+        //     await _userManager.CreateAsync(defaultUser, "123Pa$$word!");
+        //     await _userManager.AddToRoleAsync(defaultUser, Roles.Basic.ToString());
+        // }
+        //
+        // #endregion
+        //
+        // #region Add to Users table
+        //
+        // // TODO Refactor this. It's require for now because some user has a multiple property.
+        // foreach (var userOnCsv in usersOnCsv)
+        // {
+        //     var us = new UserModel(userOnCsv);
+        //     _context.Users.Add(new User()
+        //     {
+        //         UserCode = us.UserCode,
+        //         UserName = us.UserName,
+        //         PhoneNumber = us.Email,
+        //         Email = us.Email,
+        //         Address = us.Address,
+        //         Created = DateTime.Now
+        //     });
+        // }
+        //
+        // #endregion
+        //
+        // await _context.SaveChangesAsync(default);
+        // return new ResponseApplyUserListCommand()
+        // {
+        //     Status = true
+        // };
+        throw new NotImplementedException();
     }
 
     public async Task<IdentityUser> FindByIdAsync(FindByIdRequest request)

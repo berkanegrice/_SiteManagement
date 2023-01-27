@@ -28,25 +28,27 @@ public class GetKidemTransactionQueryHandler : IRequestHandler<GetKidemTransacti
     public async Task<IQueryable<KidemTransactionDto>>
         Handle(GetKidemTransactionQuery request, CancellationToken cancellationToken)
     {
-        #region Fetch Data
+        // #region Fetch Data
+        //
+        // // TODO: Fix Automapper
+        //
+        // return await Task.FromResult(_context
+        //     .DueTransactions
+        //     .Include(dt => dt.RegisterInformation)
+        //     .Where(x => x.AccountCode == request.UserCode)
+        //     .Select(s => new KidemTransactionDto()
+        //     {
+        //         Id = s.Id,
+        //         Date = s.Date,
+        //         Detail = s.Detail,
+        //         Debt = s.Debt.ToDouble(),
+        //         Credit = s.Credit.ToDouble(),
+        //         BalanceDebt = s.BalanceDebt.ToDouble(),
+        //         BalanceCredit = s.BalanceCredit.ToDouble()
+        //     }));
+        //
+        // #endregion
         
-        // TODO: Fix Automapper
-
-        return await Task.FromResult(_context
-            .DueTransactions
-            .Include(dt => dt.DueInformation)
-            .Where(x => x.AccountCode == request.UserCode)
-            .Select(s => new KidemTransactionDto()
-            {
-                Id = s.Id,
-                Date = s.Date,
-                Detail = s.Detail,
-                Debt = s.Debt.ToDouble(),
-                Credit = s.Credit.ToDouble(),
-                BalanceDebt = s.BalanceDebt.ToDouble(),
-                BalanceCredit = s.BalanceCredit.ToDouble()
-            }));
-
-        #endregion
+        throw new NotImplementedException();
     }
 }

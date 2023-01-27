@@ -28,25 +28,27 @@ public class GetSufaTransactionQueryHandler : IRequestHandler<GetSufaTransaction
     public async Task<IQueryable<SufaTransactionDto>>
         Handle(GetSufaTransactionQuery request, CancellationToken cancellationToken)
     {
-        #region Fetch Data
-        
-        // TODO: Fix Automapper for DueTransaction.
+        // #region Fetch Data
+        //
+        // // TODO: Fix Automapper for DueTransaction.
+        //
+        // return await Task.FromResult(_context
+        //     .DueTransactions
+        //     .Include(dt => dt.RegisterInformation)
+        //     .Where(x => x.AccountCode == request.UserCode)
+        //     .Select(s => new SufaTransactionDto()
+        //     {
+        //         Id = s.Id,
+        //         Date = s.Date,
+        //         Detail = s.Detail,
+        //         Debt = s.Debt.ToDouble(),
+        //         Credit = s.Credit.ToDouble(),
+        //         BalanceDebt = s.BalanceDebt.ToDouble(),
+        //         BalanceCredit = s.BalanceCredit.ToDouble()
+        //     }));
+        //
+        // #endregion
 
-        return await Task.FromResult(_context
-            .DueTransactions
-            .Include(dt => dt.DueInformation)
-            .Where(x => x.AccountCode == request.UserCode)
-            .Select(s => new SufaTransactionDto()
-            {
-                Id = s.Id,
-                Date = s.Date,
-                Detail = s.Detail,
-                Debt = s.Debt.ToDouble(),
-                Credit = s.Credit.ToDouble(),
-                BalanceDebt = s.BalanceDebt.ToDouble(),
-                BalanceCredit = s.BalanceCredit.ToDouble()
-            }));
-
-        #endregion
+        throw new NotImplementedException();
     }
 }

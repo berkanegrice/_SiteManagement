@@ -1,6 +1,6 @@
-namespace SiteManagement.Domain.Entities.DuesRelated;
+namespace SiteManagement.Domain.Entities.RegisterRelated;
 
-public class DueTransaction : BaseAuditableEntity
+public class RegisterTransaction : BaseAuditableEntity
 {
     public new int Id { get; set; }
     public int AccountCode { get; set; }
@@ -17,5 +17,5 @@ public class DueTransaction : BaseAuditableEntity
     
     public string BalanceCredit { get; set; }
     
-    public DueInformation DueInformation { get; set; }
+    public RegisterInformation RegisterInformation { get; set; }
 }
