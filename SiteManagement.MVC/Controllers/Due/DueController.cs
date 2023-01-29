@@ -3,17 +3,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SiteManagement.Application.Common.Interfaces;
-using SiteManagement.Application.DueRelated.DueInformations.Command;
-using SiteManagement.Application.DueRelated.DueInformations.Queries.GetDueInformations;
-using SiteManagement.Application.DueRelated.DueInformations.Response;
-using SiteManagement.Application.DueRelated.DueTransactions.Commands;
-using SiteManagement.Application.DueRelated.DueTransactions.Queries.GetDueTransactions;
-using SiteManagement.Application.Files.Commands.UploadFiles;
+using SiteManagement.Application.RegisterRelated.RegisterInformations.Queries.GetDueInformations;
+using SiteManagement.Application.RegisterRelated.RegisterTransactions.Queries.GetDueTransactions;
 using SiteManagement.MVC.Models;
-using SiteManagement.MVC.Services;
 
-using SiteManagement.Infrastructure.Services;
-using SiteManagement.MVC.Services.Due;
+using SiteManagement.MVC.Services.Register;
 
 namespace SiteManagement.MVC.Controllers.Due;
 
@@ -40,8 +34,8 @@ public class DueController : Controller
     public async Task<JsonResult> GetDuesInformation()
     {
         var value = await _mediator.Send(
-            new GetDueInformationQuery { UserId = _currentUserService.UserId });
-        var res = new DueSorterService(Request.Form).ServerSideSorting(value).Result;
+            new GetRegisterInformationQuery { UserId = _currentUserService.UserId, Type = "Aidat"});
+        var res = new RegisterSorterService(Request.Form).ServerSideSorting(value).Result;
         return Json(res);
     }
     
@@ -50,8 +44,8 @@ public class DueController : Controller
     public async Task<JsonResult> GetDuesTransaction(int userCode)
     {
         var value = await _mediator.Send(
-            new GetDueTransactionQuery{ UserCode = userCode});
-        var res = new DueTransactionSorterService(Request.Form).ServerSideSorting(value).Result;
+            new GetRegisterTransactionQuery{ UserCode = userCode});
+        var res = new RegisterTransactionSorterService(Request.Form).ServerSideSorting(value).Result;
         return Json(res);
     }
 }

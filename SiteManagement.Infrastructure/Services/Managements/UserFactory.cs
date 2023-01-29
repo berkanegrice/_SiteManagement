@@ -1,3 +1,4 @@
+using System.Linq.Dynamic.Core;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using SiteManagement.Application.Common.Interfaces;
@@ -7,7 +8,6 @@ using SiteManagement.Application.Common.Models.Requests.User;
 using SiteManagement.Application.Managements.Users.Commands.ApplyUser;
 using SiteManagement.Application.Managements.Users.Commands.UploadUser;
 using SiteManagement.Domain.Entities;
-using SiteManagement.Infrastructure.Persistence.Constants;
 using SiteManagement.Infrastructure.Services.CsvReaderHelper;
 
 namespace SiteManagement.Infrastructure.Services.Managements;
@@ -45,21 +45,22 @@ public class UserFactory : IUserFactory
 
     public async Task<ResponseApplyUserListCommand> ApplyUserList(ApplyUserListRequest request)
     {
-        // #region Fetch Data
-        //
-        // var newUserListDto = await _fileService
-        //     .FetchFileById(new FetchFileRequest()
-        //     {
-        //         Id = request.Id
-        //     });
-        //
-        // #endregion
-        //
-        // #region Add to IdentityUser Table
-        //
-        // var usersOnCsv = Serializer<UserOnCsv>
-        //     .Deserialize(newUserListDto.Data);
-        //
+        #region Fetch Data
+        
+        var newUserListDto = await _fileService
+            .FetchFileById(new FetchFileRequest()
+            {
+                Id = request.Id
+            });
+
+        var usersOnCsv = Serializer<UserOnCsv>
+            .Deserialize(newUserListDto.Data);
+
+        #endregion
+        
+        
+        #region Add to IdentityUser Table
+        
         // foreach (var userOnCsv in usersOnCsv)
         // {
         //     var us = new UserModel(userOnCsv);
@@ -79,33 +80,61 @@ public class UserFactory : IUserFactory
         //     await _userManager.AddToRoleAsync(defaultUser, Roles.Basic.ToString());
         // }
         //
-        // #endregion
-        //
-        // #region Add to Users table
-        //
-        // // TODO Refactor this. It's require for now because some user has a multiple property.
-        // foreach (var userOnCsv in usersOnCsv)
-        // {
-        //     var us = new UserModel(userOnCsv);
-        //     _context.Users.Add(new User()
-        //     {
-        //         UserCode = us.UserCode,
-        //         UserName = us.UserName,
-        //         PhoneNumber = us.Email,
-        //         Email = us.Email,
-        //         Address = us.Address,
-        //         Created = DateTime.Now
-        //     });
-        // }
-        //
-        // #endregion
-        //
-        // await _context.SaveChangesAsync(default);
-        // return new ResponseApplyUserListCommand()
-        // {
-        //     Status = true
-        // };
-        throw new NotImplementedException();
+        #endregion
+        
+        #region Add to Users table
+        
+        // TODO Refactor this. It's require for now because some user has a multiple property.
+        foreach (var userOnCsv in usersOnCsv)
+        {
+            var us = new UserModel(userOnCsv);
+            
+            // "Aidat" => 13101000,
+            // "Sufa" => 13201000,
+            // "Kidem" => 13301000,
+            
+            _context.Users.Add(new User()
+            {
+                UserName = us.UserName,
+                AccountCode = int.Parse("131" + us.UserCode),
+                Type = "Aidat",
+                PhoneNumber = us.Email,
+                Email = us.Email,
+                Address = us.Address,
+                Created = DateTime.Now
+            });
+            
+            _context.Users.Add(new User()
+            {
+                UserName = us.UserName,
+                AccountCode = int.Parse("132" + us.UserCode),
+                Type = "Sufa",
+                PhoneNumber = us.Email,
+                Email = us.Email,
+                Address = us.Address,
+                Created = DateTime.Now
+            });
+            
+            _context.Users.Add(new User()
+            {
+                UserName = us.UserName,
+                AccountCode = int.Parse("133" + us.UserCode),
+                Type = "Kidem",
+                PhoneNumber = us.Email,
+                Email = us.Email,
+                Address = us.Address,
+                Created = DateTime.Now
+            });
+        }
+        
+        await _context.SaveChangesAsync(default);
+        
+        #endregion
+        
+        return new ResponseApplyUserListCommand()
+        {
+            Status = true
+        };
     }
 
     public async Task<IdentityUser> FindByIdAsync(FindByIdRequest request)

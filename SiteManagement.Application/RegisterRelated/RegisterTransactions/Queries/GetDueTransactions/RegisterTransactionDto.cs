@@ -1,9 +1,8 @@
-namespace SiteManagement.Domain.Entities.RegisterRelated;
+namespace SiteManagement.Application.RegisterRelated.RegisterTransactions.Queries.GetDueTransactions;
 
-public class RegisterTransaction : BaseAuditableEntity
+public class RegisterTransactionDto
 {
-    public new int Id { get; set; }
-    public int AccountCode { get; set; }
+    public int Id { get; set; }
     
     public DateTime Date { get; set; }
     
@@ -16,6 +15,4 @@ public class RegisterTransaction : BaseAuditableEntity
     public double? BalanceDebt { get; set; }
     
     public double? BalanceCredit { get; set; }
-    
-    public RegisterInformation RegisterInformation { get; set; }
 }

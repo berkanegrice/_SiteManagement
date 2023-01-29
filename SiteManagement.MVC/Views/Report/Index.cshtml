@@ -5,7 +5,7 @@
 @inject IAuthorizationService AuthorizationService
 
 @{
-    ViewData["Title"] = "Index";
+    ViewBag.Title = "Raporlar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -23,10 +23,8 @@
         <input type="file" name="file" multiple required/>
         <input type="text" autocomplete="off" placeholder="Enter File Description" name="description" required/>
         <button class="btn btn-success" type="submit"
-                asp-controller="File"
-                asp-route-registerName="Aidat"
-                asp-action="UploadToDatabase">
-            Yükle
+                asp-controller="Report"
+                asp-action="UploadToDatabase">Yükle
         </button>
     </form>
     <hr/>

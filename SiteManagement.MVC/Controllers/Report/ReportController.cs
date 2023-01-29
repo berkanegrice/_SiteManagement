@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SiteManagement.Application.Common.Interfaces;
+using SiteManagement.Application.Files.Commands.UploadFiles;
 using SiteManagement.Application.Reports.Commands;
 using SiteManagement.Application.Reports.Queries;
 using SiteManagement.MVC.Models;
@@ -35,23 +36,20 @@ public class ReportController : Controller
             {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
     }
 
-    // public async Task<IActionResult> UploadToDatabase(IFormFile file, string description)
-    // {
-    //     var resp
-    //         = await _mediator.Send(
-    //             new UploadReportCommand()
-    //             {
-    //                 UploadFileCommand = new UploadFileCommand()
-    //                 {
-    //                     File = file,
-    //                     Description = "Report." + description,
-    //                     UploadedBy = _currentUserService.UserId!
-    //                 }
-    //             });
-    //     return resp.Status
-    //         ? RedirectToAction("Index")
-    //         : RedirectToAction("Error");
-    // }
+    public async Task<IActionResult> UploadToDatabase(IFormFile file, string description)
+    {
+        var resp = await _mediator.Send(new UploadFileCommand()
+        {
+            File = file,
+            Description = description,
+            FileType = "Report",
+            UploadedBy = _currentUserService.UserId!
+        });
+
+        return resp.Status
+            ? RedirectToAction("Index")
+            : RedirectToAction("Error");
+    }
 
     public async Task<IActionResult> DownloadFileFromDatabase(int id)
     {

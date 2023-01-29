@@ -2,9 +2,10 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SiteManagement.Application.Common.Interfaces;
-using SiteManagement.Application.SufaRelated.SufaInformations.Queries;
-using SiteManagement.Application.SufaRelated.SufaTransactions.Queries;
-using SiteManagement.MVC.Services.Sufa;
+using SiteManagement.Application.RegisterRelated.RegisterInformations.Queries.GetDueInformations;
+using SiteManagement.Application.RegisterRelated.RegisterTransactions.Queries.GetDueTransactions;
+using SiteManagement.MVC.Services.Register;
+
 
 namespace SiteManagement.MVC.Controllers.Sufa;
 
@@ -28,23 +29,19 @@ public class SufaController : Controller
     [Authorize]
     public async Task<JsonResult> GetSufasInformation()
     {
-        // var value = await _mediator.Send(
-        //     new GetSufaInformationQuery { UserId = _currentUserService.UserId });
-        // var res = new SufaSorterService(Request.Form).ServerSideSorting(value).Result;
-        // return Json(res);
-        
-        throw new NotImplementedException();
+        var value = await _mediator.Send(
+            new GetRegisterInformationQuery { UserId = _currentUserService.UserId, Type = "Sufa" });
+        var res = new RegisterSorterService(Request.Form).ServerSideSorting(value).Result;
+        return Json(res);
     }
     
     [HttpPost]
     [Authorize]
     public async Task<JsonResult> GetSufasTransaction(int userCode)
     {
-        // var value = await _mediator.Send(
-        //     new GetSufaTransactionQuery{ UserCode = userCode});
-        // var res = new SufaTransactionSorterService(Request.Form).ServerSideSorting(value).Result;
-        // return Json(res);
-        
-        throw new NotImplementedException();
+        var value = await _mediator.Send(
+            new GetRegisterTransactionQuery{ UserCode = userCode});
+        var res = new RegisterTransactionSorterService(Request.Form).ServerSideSorting(value).Result;
+        return Json(res);
     }
 }

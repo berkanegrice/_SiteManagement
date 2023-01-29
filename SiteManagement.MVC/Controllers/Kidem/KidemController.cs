@@ -2,9 +2,10 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SiteManagement.Application.Common.Interfaces;
-using SiteManagement.Application.KidemRelated.KidemInformations.Queries;
-using SiteManagement.Application.KidemRelated.KidemTransactions.Queries;
-using SiteManagement.MVC.Services.Kidem;
+using SiteManagement.Application.RegisterRelated.RegisterInformations.Queries.GetDueInformations;
+using SiteManagement.Application.RegisterRelated.RegisterTransactions.Queries.GetDueTransactions;
+using SiteManagement.MVC.Services.Register;
+
 
 namespace SiteManagement.MVC.Controllers.Kidem;
 
@@ -29,8 +30,8 @@ public class KidemController : Controller
     public async Task<JsonResult> GetKidemsInformation()
     {
         var value = await _mediator.Send(
-            new GetKidemInformationQuery { UserId = _currentUserService.UserId });
-        var res = new KidemSorterService(Request.Form).ServerSideSorting(value).Result;
+            new GetRegisterInformationQuery { UserId = _currentUserService.UserId, Type = "Kidem" });
+        var res = new RegisterSorterService(Request.Form).ServerSideSorting(value).Result;
         return Json(res);
     }
     
@@ -39,8 +40,8 @@ public class KidemController : Controller
     public async Task<JsonResult> GetKidemsTransaction(int userCode)
     {
         var value = await _mediator.Send(
-            new GetKidemTransactionQuery{ UserCode = userCode});
-        var res = new KidemTransactionSorterService(Request.Form).ServerSideSorting(value).Result;
+            new GetRegisterTransactionQuery{ UserCode = userCode});
+        var res = new RegisterTransactionSorterService(Request.Form).ServerSideSorting(value).Result;
         return Json(res);
     }
 }

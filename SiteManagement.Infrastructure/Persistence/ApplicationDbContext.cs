@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Infrastructure.Persistence.Interceptors;
 using MediatR;
@@ -33,63 +34,12 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     
         base.OnModelCreating(builder);
-
-        builder.Entity<User>()
-            .HasMany(t => t.RegisterInformations)
-            .WithMany(t => t.Users)
-            .UsingEntity(j => j.ToTable("UserRegister"));
         
         builder.Entity<RegisterInformation>()
             .HasMany(di => di.RegisterTransactions)
             .WithOne(di => di.RegisterInformation)
+            .HasPrincipalKey(di => di.AccountCode)
             .HasForeignKey(dt => dt.AccountCode);
-        
-        
-        // builder.Entity<User>()
-        //     .HasMany<RegisterInformation>(s => s.RegisterInformations)
-        //     .WithMany(c => c.Users)
-        //     .Map(cs =>
-        //     {
-        //         cs.MapLeftKey("UserRefId");
-        //         cs.MapRightKey("RegisterInformationRefId");
-        //         cs.ToTable("UserRegister");
-        //     });
-        
-        
-        // builder.Entity<Student>()
-        //     .HasMany<Course>(s => s.Courses)
-        //     .WithMany(c => c.Students)
-        //     .Map(cs =>
-        //     {
-        //         cs.MapLeftKey("StudentRefId");
-        //         cs.MapRightKey("CourseRefId");
-        //         cs.ToTable("StudentCourse");
-        //     });
-        
-        // builder.Entity<RegisterInformation>()
-        //     .HasOne<User>(s => s.User)
-        //     .WithMany(g => g.RegisterInformations)
-        //     .HasForeignKey(s => s.UserRegisterId);
-        //
-
-        
-        
-        
-        // builder.Entity<User>()
-        //     .HasOne(u => u.Due)
-        //     .WithOne(d => d.User)
-        //     .HasPrincipalKey<User>(u => u.UserCode)
-        //     .HasForeignKey<DueInformation>(d => d.AccountCode);
-        //
-        // builder.Entity<DueInformation>()
-        //     .HasMany(di => di.Transactions)
-        //     .WithOne(di => di.DueInformation)
-        //     .HasPrincipalKey(di=> di.AccountCode)
-        //     .HasForeignKey(dt => dt.AccountCode);
-    
-        // builder.ApplyConfiguration(new RoleConfiguration());
-        // builder.ApplyConfiguration(new UserConfiguration());
-        // builder.ApplyConfiguration(new UserRoleConfiguration());
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -101,6 +51,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<RegisterTransaction> RegisterTransactions { get; set; }
     
     public DbSet<RegisterInformation> RegisterInformations { get; set; }
+    
     public DbSet<FileOnDatabaseModel> FilesOnDatabase { get; set; }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

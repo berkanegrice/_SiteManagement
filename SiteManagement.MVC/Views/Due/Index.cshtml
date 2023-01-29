@@ -1,11 +1,12 @@
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using SiteManagement.Infrastructure.Persistence.Constants
+
 @using Microsoft.AspNetCore.Authorization
 @model SiteManagement.MVC.Models.DueInformationVm
 @inject IAuthorizationService AuthorizationService
 
 @* @await Html.PartialAsync("_ApplyStatus") *@
-
+@{
+    ViewBag.Title = "Aidat";
+}
 <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <div class="container">
     <br />

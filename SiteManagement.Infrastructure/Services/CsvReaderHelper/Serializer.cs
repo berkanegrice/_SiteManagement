@@ -12,6 +12,7 @@ public static class Serializer<T>
         {
             HeaderValidated = null,
             MissingFieldFound = null,
+            Delimiter = "\t"
         };
         
         using var ms = new MemoryStream(bytes);

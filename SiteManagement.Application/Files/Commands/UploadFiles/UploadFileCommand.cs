@@ -37,32 +37,5 @@ public class UploadFileCommandHandler
             UploadedBy = request.UploadedBy,
             FileType = request.FileType
         });
-
-        // var fileName = Path.GetFileNameWithoutExtension(request.File.FileName);
-        // var extension = Path.GetExtension(request.File.FileName);
-        // var fileModel = new FileOnDatabaseModel
-        // {
-        //     Name = fileName,
-        //     Description = request.Description,
-        //     FileType = request.FileType,
-        //     Extension = extension,
-        //     UploadedBy = request.UploadedBy,
-        //     CreatedOn = DateTime.UtcNow
-        // };
-        //
-        // using (var dataStream = new MemoryStream())
-        // {
-        //     await request.File.CopyToAsync(dataStream, cancellationToken).ConfigureAwait(false);
-        //     fileModel.Data = dataStream.ToArray();
-        // }
-        //
-        // fileModel.AddDomainEvent(new NewUserListAddedEvent(fileModel));
-        // _context.FilesOnDatabase.Add(fileModel);
-        //
-        // return new ResponseUploadFileCommand()
-        // {
-        //     Status = await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false) > 0,
-        //     InsertedId = fileModel.Id
-        // };
     }
 }

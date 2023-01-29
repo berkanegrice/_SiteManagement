@@ -56,7 +56,7 @@ public class UserController : Controller
         return resp.Status
             ? RedirectToAction("Index", new
             {
-                Message = $"{registerName} eklendi",
+                Message = "Kullanici listesi eklendi",
                 InsertedId = resp.InsertedId
             })
             : RedirectToAction("Error");

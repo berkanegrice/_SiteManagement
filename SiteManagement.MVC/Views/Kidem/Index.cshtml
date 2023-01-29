@@ -1,8 +1,10 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using SiteManagement.Infrastructure.Persistence.Constants
+﻿
 @using Microsoft.AspNetCore.Authorization
 @model SiteManagement.MVC.Models.SufaInformationVm
 @inject IAuthorizationService AuthorizationService
+@{
+    ViewBag.Title = "Kidem";
+}
 
 <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <div class="container">

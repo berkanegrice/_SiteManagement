@@ -36,7 +36,7 @@ public static class ConfigureServices
         else
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(configuration.GetConnectionString("Dev_ApplicationDb"),
+                options.UseSqlite(configuration.GetConnectionString("Dev_AppDb"),
                     builder
                         => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
