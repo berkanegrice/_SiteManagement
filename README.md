@@ -1,4 +1,4 @@
-# _SiteManagement
+# SiteManagement
 It's a management tool for small-sized apartments.
 
 Feature
