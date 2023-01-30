@@ -3,8 +3,8 @@ using AutoMapper;
 using SiteManagement.Application.Common.Helper;
 using SiteManagement.Application.DueRelated.DueInformations.Queries.GetDueInformations;
 using SiteManagement.Application.Files.Queries.GetFiles;
-using SiteManagement.Domain.Entities.DuesRelated;
 using SiteManagement.Domain.Entities.FileRelated;
+using SiteManagement.Domain.Entities.RegisterRelated;
 
 namespace SiteManagement.Application.Common.Mappings;
 
@@ -13,32 +13,32 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         #region Mapps
-        
+
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
 
-        CreateMap<DueInformation, DueInformationDto>()
-            .ForMember(
-                dto => dto.LeaseHolder,
-                conf =>
-                    conf.MapFrom(ol => ol.User.UserName))
-            .ForMember(dto => dto.Email,
-                conf =>
-                    conf.MapFrom(ol => ol.User.Email))
-            .ForMember(dto => dto.Debt,
-                conf =>
-                    conf.MapFrom(ol => ol.Debt.ToDouble()))
-            .ForMember(dto => dto.Credit,
-                conf =>
-                    conf.MapFrom(ol => ol.Credit.ToDouble()))
-            .ForMember(dto => dto.BalanceDebt,
-                conf =>
-                    conf.MapFrom(ol => ol.BalanceDebt.ToDouble()))
-            .ForMember(dto => dto.BalanceCredit,
-                conf =>
-                    conf.MapFrom(ol => ol.BalanceCredit.ToDouble()));
-        
-
-        //TODO: This should be refactored.
+        // CreateMap<RegisterInformation, DueInformationDto>()
+        //     .ForMember(
+        //         dto => dto.LeaseHolder,
+        //         conf =>
+        //             conf.MapFrom(ol => ol.User.UserName))
+        //     .ForMember(dto => dto.Email,
+        //         conf =>
+        //             conf.MapFrom(ol => ol.User.Email))
+        //     .ForMember(dto => dto.Debt,
+        //         conf =>
+        //             conf.MapFrom(ol => ol.Debt.ToDouble()))
+        //     .ForMember(dto => dto.Credit,
+        //         conf =>
+        //             conf.MapFrom(ol => ol.Credit.ToDouble()))
+        //     .ForMember(dto => dto.BalanceDebt,
+        //         conf =>
+        //             conf.MapFrom(ol => ol.BalanceDebt.ToDouble()))
+        //     .ForMember(dto => dto.BalanceCredit,
+        //         conf =>
+        //             conf.MapFrom(ol => ol.BalanceCredit.ToDouble()));
+        //
+        //
+        // //TODO: This should be refactored.
         CreateMap<FileOnDatabaseModel, FileOnDataBaseDto>()
             .ForMember(dto => dto.Id,
                 conf =>

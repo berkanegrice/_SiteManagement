@@ -1,6 +1,9 @@
 @using Microsoft.AspNetCore.Identity;
 @model IEnumerable<IdentityUser>
 
+@{
+    ViewBag.Title = "Uye Listesi";
+}
 
 <h4>Yeni Kullanici Listesi Ekle</h4>
 @{await Html.RenderPartialAsync("UploadUserList"); }
@@ -14,7 +17,7 @@
             <a type="button" class="btn btn-primary" 
                asp-controller="User" 
                asp-action="ApplyUserList" 
-               asp-route-userListId="@TempData["UserListId"]">Uygula</a>
+               asp-route-userListId="@TempData["InsertedId"]">Uygula</a>
         </span>
     </div>
 }

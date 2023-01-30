@@ -2,16 +2,18 @@ using Microsoft.AspNetCore.Authorization;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Infrastructure.Identity;
 using SiteManagement.Infrastructure.Persistence;
-using SiteManagement.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SiteManagement.Application.Common.Interfaces.Due;
+using SiteManagement.Application.Common.Interfaces.User;
 using SiteManagement.Infrastructure.Persistence.Interceptors;
-using SiteManagement.Infrastructure.Services.Dues;
+using SiteManagement.Infrastructure.Services.Applier;
 using SiteManagement.Infrastructure.Services.Managements;
 using SiteManagement.Infrastructure.Services.Misc;
 using SiteManagement.Infrastructure.Services.Permissions;
+using SiteManagement.Infrastructure.Services.Registers;
 using SiteManagement.Infrastructure.Services.StorageServices;
 
 
@@ -34,8 +36,14 @@ public static class ConfigureServices
         else
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DevelopmentAppDb"),
-                    builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                options.UseSqlite(configuration.GetConnectionString("Dev_AppDb"),
+                    builder
+                        => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+
+            services.AddDbContext<IdentityContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("Dev_IdentityDb"),
+                    builder
+                        => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
@@ -46,13 +54,14 @@ public static class ConfigureServices
 
         #region Feature Services
 
-        services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<IDateTime, DateTimeService>();
+        services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<IFileService, FileService>();
         services.AddTransient<IUserFactory, UserFactory>();
         services.AddTransient<IRoleFactory, RoleFactory>();
         services.AddTransient<ISignInFactory, SignInFactory>();
-        services.AddTransient<IDueFactory, DueFactory>();
+        services.AddTransient<IRegisterFactory, RegisterFactory>();
+        services.AddTransient<IApplyService, ApplyService>();
 
         #endregion
 
@@ -66,7 +75,7 @@ public static class ConfigureServices
         
         services.AddIdentity<IdentityUser, IdentityRole>()
             .AddDefaultUI()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddEntityFrameworkStores<IdentityContext>()
             .AddDefaultTokenProviders();
         
         return services;

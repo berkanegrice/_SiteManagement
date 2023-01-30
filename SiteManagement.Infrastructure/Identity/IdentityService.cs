@@ -3,6 +3,7 @@ using SiteManagement.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SiteManagement.Application.Common.Models.Misc;
 
 namespace SiteManagement.Infrastructure.Identity;
 

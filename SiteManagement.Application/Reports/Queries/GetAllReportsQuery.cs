@@ -1,6 +1,6 @@
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
-using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.Requests.File;
 using SiteManagement.Application.Files.Queries.GetFiles;
 
 namespace SiteManagement.Application.Reports.Queries;
@@ -23,10 +23,6 @@ public class GetAllReportsCommandHandler
     public async Task<IQueryable<FileOnDataBaseDto>>
         Handle(GetAllReportsQuery request, CancellationToken cancellationToken)
     {
-        return await _fileService.FetchFileByCategory(
-            new FetchFileRequest()
-            {
-                Type = "Report"
-            });
+        return await _fileService.FetchFileByCategory(new FetchFileRequest() { Type = "Report" });
     }
 }

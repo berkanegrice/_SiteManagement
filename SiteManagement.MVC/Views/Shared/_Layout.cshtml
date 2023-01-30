@@ -34,6 +34,16 @@
                     </a>
                 </li>
                 <li>
+                    <a asp-controller="Kidem" asp-action="Index">
+                        <span class="fa fa-sticky-note"></span>Kıdem
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Sufa" asp-action="Index">
+                        <span class="fa fa-sticky-note"></span>Şufa
+                    </a>
+                </li>
+                <li>
                     <a asp-controller="Report" asp-action="Index">
                         <span class="fa fa-sticky-note"></span>Raporlar
                     </a>
@@ -48,6 +58,11 @@
                     <li>
                         <a asp-controller="Role" asp-action="Index">
                             <span class="fa fa-sticky-note"></span>Roller
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="File" asp-action="Index">
+                            <span class="fa fa-sticky-note"></span>Dosya Yukle
                         </a>
                     </li>
                 }
@@ -67,7 +82,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
-                        <partial name="_LoginPartial" />
+                        <partial name="_LoginPartial"/>
                     </ul>
                 </div>
             </div>
@@ -89,7 +104,7 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <br />
+                    <br/>
                     <div style="width:90%; margin:0 auto;">
                         <table id="DueTransactionDatatable" class="table table-striped table-bordered dt-responsive nowrap">
                             <thead>

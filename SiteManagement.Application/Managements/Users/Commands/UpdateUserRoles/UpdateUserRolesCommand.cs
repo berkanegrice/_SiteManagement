@@ -1,7 +1,10 @@
 using System.Security.Claims;
 using MediatR;
 using SiteManagement.Application.Common.Interfaces;
+using SiteManagement.Application.Common.Interfaces.User;
 using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.Requests;
+using SiteManagement.Application.Common.Models.Requests.User;
 using SiteManagement.Application.Managements.Users.Queries.GetUserRoles;
 
 namespace SiteManagement.Application.Managements.Users.Commands.UpdateUserRoles;

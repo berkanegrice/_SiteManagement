@@ -11,7 +11,8 @@ public static class Serializer<T>
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             HeaderValidated = null,
-            MissingFieldFound = null
+            MissingFieldFound = null,
+            Delimiter = "\t"
         };
         
         using var ms = new MemoryStream(bytes);

@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Infrastructure.Persistence.Interceptors;
 using MediatR;
@@ -6,13 +7,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SiteManagement.Domain.Entities;
-using SiteManagement.Domain.Entities.DuesRelated;
 using SiteManagement.Domain.Entities.FileRelated;
+using SiteManagement.Domain.Entities.RegisterRelated;
 using SiteManagement.Infrastructure.Common;
 
 namespace SiteManagement.Infrastructure.Persistence;
 
-public class ApplicationDbContext : IdentityDbContext<IdentityUser>, IApplicationDbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private readonly IMediator _mediator;
     private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
@@ -33,31 +34,26 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>, IApplicatio
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     
         base.OnModelCreating(builder);
-    
-        builder.Entity<User>()
-            .HasOne(u => u.Due)
-            .WithOne(d => d.User)
-            .HasPrincipalKey<User>(u => u.UserCode)
-            .HasForeignKey<DueInformation>(d => d.AccountCode);
-    
-        builder.Entity<DueInformation>()
-            .HasMany(di => di.Transactions)
-            .WithOne(di => di.DueInformation)
-            .HasPrincipalKey(di=> di.AccountCode)
+        
+        builder.Entity<RegisterInformation>()
+            .HasMany(di => di.RegisterTransactions)
+            .WithOne(di => di.RegisterInformation)
+            .HasPrincipalKey(di => di.AccountCode)
             .HasForeignKey(dt => dt.AccountCode);
-    
-        // builder.ApplyConfiguration(new RoleConfiguration());
-        // builder.ApplyConfiguration(new UserConfiguration());
-        // builder.ApplyConfiguration(new UserRoleConfiguration());
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
     }
-    public new DbSet<User> Users { get; set; }
-    public DbSet<DueTransaction> DueTransactions { get; set; }
-    public DbSet<DueInformation> DueInformations { get; set; }
+
+    public DbSet<User> Users { get; set; }
+    
+    public DbSet<RegisterTransaction> RegisterTransactions { get; set; }
+    
+    public DbSet<RegisterInformation> RegisterInformations { get; set; }
+    
     public DbSet<FileOnDatabaseModel> FilesOnDatabase { get; set; }
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         await _mediator.DispatchDomainEvents(this);

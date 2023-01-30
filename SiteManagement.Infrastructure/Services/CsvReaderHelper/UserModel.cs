@@ -7,11 +7,11 @@ public class UserModel : UserOnCsv
     {
         _userOnCsv = record;
     }
-    
-    public new int UserCode
+    // 13301001
+    public new string UserCode
     {
-        get => int.Parse(
-            _userOnCsv.UserCode.Replace(" ", "").Trim());
+        get => 
+            _userOnCsv.UserCode[4..].Replace(" ", "").Trim();
     }
 
     public new string UserName

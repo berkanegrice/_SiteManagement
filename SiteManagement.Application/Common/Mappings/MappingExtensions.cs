@@ -2,6 +2,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.Misc;
 
 namespace SiteManagement.Application.Common.Mappings;
 

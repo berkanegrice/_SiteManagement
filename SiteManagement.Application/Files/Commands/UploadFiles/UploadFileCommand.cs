@@ -1,56 +1,41 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using SiteManagement.Application.Common.Interfaces;
-using SiteManagement.Domain.Entities.FileRelated;
-using SiteManagement.Domain.Events;
+using SiteManagement.Application.Common.Models;
+using SiteManagement.Application.Common.Models.Requests;
+using SiteManagement.Application.Common.Models.Requests.File;
+
 
 namespace SiteManagement.Application.Files.Commands.UploadFiles;
 
 
 public record UploadFileCommand : IRequest<ResponseUploadFileCommand>
-{
-    public string UploadedBy { get; init; }
+{  
     public IFormFile File { get; init; }
     public string Description { get; init; }
+    public string FileType { get; init; }
+    public string UploadedBy { get; init; }
 }
 
-public class UploadFileCommandHandler : IRequestHandler<UploadFileCommand, ResponseUploadFileCommand>
+public class UploadFileCommandHandler
+    : IRequestHandler<UploadFileCommand, ResponseUploadFileCommand>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IFileService _fileService;
     
-    public UploadFileCommandHandler(IApplicationDbContext context)
+    public UploadFileCommandHandler(IFileService fileService)
     {
-        _context = context;
+        _fileService = fileService;
     }
     
     public async Task<ResponseUploadFileCommand> Handle(UploadFileCommand request, 
         CancellationToken cancellationToken)
     {
-        var fileName = Path.GetFileNameWithoutExtension(request.File.FileName);
-        var extension = Path.GetExtension(request.File.FileName);
-        var fileModel = new FileOnDatabaseModel
+        return await _fileService.UploadFile(new UploadFileRequest()
         {
-            CreatedOn = DateTime.UtcNow,
-            FileType = request.File.ContentType,
-            Extension = extension,
+            File = request.File,
+            Description = request.Description,
             UploadedBy = request.UploadedBy,
-            Name = fileName,
-            Description = request.Description
-        };
-        
-        using (var dataStream = new MemoryStream())
-        {
-            await request.File.CopyToAsync(dataStream, cancellationToken).ConfigureAwait(false);
-            fileModel.Data = dataStream.ToArray();
-        }
-        
-        fileModel.AddDomainEvent(new NewUserListAddedEvent(fileModel));
-        _context.FilesOnDatabase.Add(fileModel);
-
-        return new ResponseUploadFileCommand()
-        {
-            Success = await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false) > 0,
-            InsertedId = fileModel.Id
-        };
+            FileType = request.FileType
+        });
     }
 }
