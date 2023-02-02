@@ -1,0 +1,15 @@
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/bin/Debug/net6.0/SiteManagement.Application.deps.json
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/bin/Debug/net6.0/SiteManagement.Application.dll
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/bin/Debug/net6.0/SiteManagement.Application.pdb
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/bin/Debug/net6.0/SiteManagement.Domain.dll
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/bin/Debug/net6.0/SiteManagement.Domain.pdb
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/obj/Debug/net6.0/SiteManagement.Application.csproj.AssemblyReference.cache
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/obj/Debug/net6.0/SiteManagement.Application.GeneratedMSBuildEditorConfig.editorconfig
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/obj/Debug/net6.0/SiteManagement.Application.AssemblyInfoInputs.cache
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/obj/Debug/net6.0/SiteManagement.Application.AssemblyInfo.cs
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/obj/Debug/net6.0/SiteManagement.Application.csproj.CoreCompileInputs.cache
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/obj/Debug/net6.0/SiteManagement.Application.csproj.CopyComplete
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/obj/Debug/net6.0/SiteManagement.Application.dll
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/obj/Debug/net6.0/refint/SiteManagement.Application.dll
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/obj/Debug/net6.0/SiteManagement.Application.pdb
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Application/obj/Debug/net6.0/ref/SiteManagement.Application.dll

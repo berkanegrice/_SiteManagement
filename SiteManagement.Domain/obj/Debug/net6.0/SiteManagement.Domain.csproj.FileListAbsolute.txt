@@ -1,0 +1,12 @@
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/bin/Debug/net6.0/SiteManagement.Domain.deps.json
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/bin/Debug/net6.0/SiteManagement.Domain.dll
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/bin/Debug/net6.0/SiteManagement.Domain.pdb
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/obj/Debug/net6.0/SiteManagement.Domain.csproj.AssemblyReference.cache
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/obj/Debug/net6.0/SiteManagement.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/obj/Debug/net6.0/SiteManagement.Domain.AssemblyInfoInputs.cache
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/obj/Debug/net6.0/SiteManagement.Domain.AssemblyInfo.cs
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/obj/Debug/net6.0/SiteManagement.Domain.csproj.CoreCompileInputs.cache
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/obj/Debug/net6.0/SiteManagement.Domain.dll
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/obj/Debug/net6.0/refint/SiteManagement.Domain.dll
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/obj/Debug/net6.0/SiteManagement.Domain.pdb
+/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/obj/Debug/net6.0/ref/SiteManagement.Domain.dll

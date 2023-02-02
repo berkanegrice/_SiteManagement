@@ -36,12 +36,12 @@ public static class ConfigureServices
         else
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(configuration.GetConnectionString("Dev_AppDb"),
+                options.UseSqlite(configuration.GetConnectionString("AppDb"),
                     builder
                         => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddDbContext<IdentityContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Dev_IdentityDb"),
+                options.UseSqlServer(configuration.GetConnectionString("Prod_IdentityDb"),
                     builder
                         => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }

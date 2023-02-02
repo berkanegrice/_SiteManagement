@@ -10,6 +10,7 @@ using SiteManagement.Application.Common.Helper;
 using SiteManagement.Domain.Entities.RegisterRelated;
 using AutoMapper;
 using AutoMapper.Internal;
+using SiteManagement.Application.RegisterRelated.RegisterInformations.Response;
 
 namespace SiteManagement.Infrastructure.Services.Registers;
 
@@ -55,7 +56,7 @@ public class RegisterFactory : IRegisterFactory
 
         return cleaned;
     }
-    private static List<RegisterTransaction> Process(string rawDueData)
+    private static List<RegisterTransaction> Process(string rawDueData, string type)
     {
         var cleaned = Cleaner(rawDueData);
         var accountCode = cleaned[0]
@@ -66,6 +67,7 @@ public class RegisterFactory : IRegisterFactory
             .Select(dueInfoParts => new RegisterTransaction()
             {
                 AccountCode = int.Parse(accountCode.Replace(" ", "").Trim()),
+                Type = type,
                 Date = DateTime.ParseExact(dueInfoParts[0], "dd.MM.yyyy", CultureInfo.InstalledUICulture, DateTimeStyles.AdjustToUniversal),
                 Detail = dueInfoParts[2],
                 Debt = (string.IsNullOrWhiteSpace(dueInfoParts[3]) ? "" : dueInfoParts[3]).ToDouble(),
@@ -100,7 +102,7 @@ public class RegisterFactory : IRegisterFactory
         };
         
         var toRemove = _context.RegisterInformations
-            .Where(x => x.AccountCode > removeCond);
+            .Where(x => x.Type.Equals(request.Name));
         toRemove.ForAll(f => _context.RegisterInformations.Remove(f));
         
         await _context.SaveChangesAsync(default);
@@ -170,7 +172,7 @@ public class RegisterFactory : IRegisterFactory
         };
         
         var toRemove = _context.RegisterTransactions
-            .Where(x => x.AccountCode > removeCond);
+            .Where(x => x.Type.Equals(request.Name));
         toRemove.ForAll(f => _context.RegisterTransactions.Remove(f));
         
         #endregion
@@ -188,7 +190,8 @@ public class RegisterFactory : IRegisterFactory
             }
             else
             {
-                var register = Process(part);
+                var register = Process(part, request.Name);
+                
                 register.ForEach(f => _context.RegisterTransactions.Add(f));
                 part = "";
             }

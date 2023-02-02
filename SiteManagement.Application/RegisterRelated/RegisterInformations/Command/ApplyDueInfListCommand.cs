@@ -5,6 +5,7 @@ using SiteManagement.Application.Common.Models;
 using SiteManagement.Application.Common.Models.Requests;
 using SiteManagement.Application.Common.Models.Requests.Register;
 using SiteManagement.Application.DueRelated.DueInformations.Response;
+using SiteManagement.Application.RegisterRelated.RegisterInformations.Response;
 
 namespace SiteManagement.Application.DueRelated.DueInformations.Command;
 

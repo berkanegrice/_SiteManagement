@@ -148,9 +148,11 @@ namespace SiteManagement.Infrastructure.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.HasIndex("AccountCode");
+                    b.HasKey("Id");
 
                     b.ToTable("RegisterTransactions");
                 });
@@ -199,23 +201,6 @@ namespace SiteManagement.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("SiteManagement.Domain.Entities.RegisterRelated.RegisterTransaction", b =>
-                {
-                    b.HasOne("SiteManagement.Domain.Entities.RegisterRelated.RegisterInformation", "RegisterInformation")
-                        .WithMany("RegisterTransactions")
-                        .HasForeignKey("AccountCode")
-                        .HasPrincipalKey("AccountCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RegisterInformation");
-                });
-
-            modelBuilder.Entity("SiteManagement.Domain.Entities.RegisterRelated.RegisterInformation", b =>
-                {
-                    b.Navigation("RegisterTransactions");
                 });
 #pragma warning restore 612, 618
         }

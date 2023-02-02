@@ -14,5 +14,4 @@ public class RegisterInformation : BaseAuditableEntity
     public int AccountCode { get; set; }
 
     public string Type { get; set; }
-    public ICollection<RegisterTransaction> RegisterTransactions { get; set; }
 }

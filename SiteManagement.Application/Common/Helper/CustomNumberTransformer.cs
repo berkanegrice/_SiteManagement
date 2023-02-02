@@ -4,6 +4,7 @@ public static class CustomNumberTransformer
 {
     public static double ToDouble(this string? str)
     {
+        str = str?.Replace('.', '-').Replace(',', '.').Replace('-', ',');
         return !string.IsNullOrEmpty(str) && !string.IsNullOrWhiteSpace(str) ? double.Parse(str) : 0.0;
     }
 }

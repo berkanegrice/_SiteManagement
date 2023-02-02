@@ -1,6 +1,5 @@
 using SiteManagement.Application;
 using SiteManagement.Infrastructure;
-using SiteManagement.Infrastructure.Persistence;
 using SiteManagement.MVC;
 
 var builder = WebApplication.CreateBuilder(args);

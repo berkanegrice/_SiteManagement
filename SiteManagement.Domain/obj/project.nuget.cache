@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "+PSsXze+4KZiiDGTC3Q1JX9cOtmM/kOFHbNPzUg3w6qe3ofbyHXAGUzhreXH9sltHD5QdjCtyosd9DXGvUGZEA==",
+  "success": true,
+  "projectFilePath": "/home/berkan/RiderProjects/SiteManagementCleanArch/SiteManagement.Domain/SiteManagement.Domain.csproj",
+  "expectedPackageFiles": [
+    "/home/berkan/.nuget/packages/csvhelper/30.0.1/csvhelper.30.0.1.nupkg.sha512",
+    "/home/berkan/.nuget/packages/mediatr/10.0.1/mediatr.10.0.1.nupkg.sha512",
+    "/home/berkan/.nuget/packages/mediatr.contracts/1.0.1/mediatr.contracts.1.0.1.nupkg.sha512",
+    "/home/berkan/.nuget/packages/mediatr.extensions.microsoft.dependencyinjection/10.0.1/mediatr.extensions.microsoft.dependencyinjection.10.0.1.nupkg.sha512",
+    "/home/berkan/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/6.0.0/microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
