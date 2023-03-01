@@ -34,6 +34,7 @@ public class RegisterFactory : IRegisterFactory
         inputDueData = inputDueData
             .Replace(";;;;;;;;;", "")
             .Replace(";;Nakli Yekün;;;;  ;  ;  ;", "")
+            .Replace(";;Nakli Yekün;;;; ; ; ; ", "")
             .Replace("TARİH", "Date")
             .Replace("FİŞ NO", "FisNo")
             .Replace(";A Ç I K L A M A", "Detail")
@@ -61,6 +62,16 @@ public class RegisterFactory : IRegisterFactory
         var cleaned = Cleaner(rawDueData);
         var accountCode = cleaned[0]
             .Split(";")[1];
+        
+        // var x = cleaned.Skip(2).Select(dueInfo => dueInfo.Split(";"));
+        // foreach (var y in x)
+        // {
+        //     foreach (var s in y)
+        //     {
+        //         Console.WriteLine(s);
+        //     }
+        // }
+        // throw new NotImplementedException();
 
         return cleaned.Skip(2)
             .Select(dueInfo => dueInfo.Split(";"))
@@ -68,7 +79,9 @@ public class RegisterFactory : IRegisterFactory
             {
                 AccountCode = int.Parse(accountCode.Replace(" ", "").Trim()),
                 Type = type,
-                Date = DateTime.ParseExact(dueInfoParts[0], "dd.MM.yyyy", CultureInfo.InstalledUICulture, DateTimeStyles.AdjustToUniversal),
+                Date = DateTime.ParseExact(
+                    dueInfoParts[0], "dd.MM.yyyy", 
+                    CultureInfo.InstalledUICulture, DateTimeStyles.AdjustToUniversal),
                 Detail = dueInfoParts[2],
                 Debt = (string.IsNullOrWhiteSpace(dueInfoParts[3]) ? "" : dueInfoParts[3]).ToDouble(),
                 Credit = (string.IsNullOrWhiteSpace(dueInfoParts[4]) ? "" : dueInfoParts[4]).ToDouble(),
