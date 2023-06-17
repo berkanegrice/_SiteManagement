@@ -31,7 +31,7 @@ public class DueController : Controller
     
     [HttpPost]
     [Authorize]
-    public async Task<JsonResult> GetDuesInformation()
+    public async Task<JsonResult?> GetDuesInformation()
     {
         var value = await _mediator.Send(
             new GetRegisterInformationQuery { UserId = _currentUserService.UserId, Type = "Aidat"});

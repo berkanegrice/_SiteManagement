@@ -66,8 +66,5 @@ public class GetDueInformationHandler : IRequestHandler<GetRegisterInformationQu
         if (isSuperAdmin || isAdmin) 
             return query;
         return query.Where(x => x.Email == userEmail);
-        
-        throw new NotImplementedException();
-
     }
 }

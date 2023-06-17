@@ -3,7 +3,7 @@ namespace SiteManagement.Application.RegisterRelated.RegisterInformations.Querie
     public class RegisterInformationDto
     {
         public int Id { get; set; }
-        public string Email { get; set; }
+        public string? Email { get; set; }
         public int AccountCode { get; set; }
         public string LeaseHolder { get; set; }
         public double? Debt { get; set; }

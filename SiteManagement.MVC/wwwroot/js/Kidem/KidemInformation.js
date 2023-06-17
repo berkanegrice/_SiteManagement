@@ -43,7 +43,7 @@ $("#KidemInformationDatatable").DataTable({
         },
         {
             "render": function (data, type, row, meta) {
-                return "<a class='btn btn-info' style='position:relative; left:50px;' onclick=GetKidemsTransactions('" + row.accountCode+ "');>Detay</a>";
+                return "<a class='btn btn-info' style='position:relative; left:50px;' onclick=GetKidemTransactions('" + row.accountCode+ "');>Detay</a>";
             }
         },
     ]

@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using SiteManagement.Domain.Entities;
 using SiteManagement.Domain.Entities.FileRelated;
 using SiteManagement.Domain.Entities.RegisterRelated;
 

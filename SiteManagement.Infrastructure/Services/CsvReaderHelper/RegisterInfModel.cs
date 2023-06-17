@@ -13,9 +13,9 @@ public class RegisterInfModel : RegisterInfOnCsv
         BalanceCredit = registerInfOnCsv.BalanceCredit!.Trim().ToDouble();
     }
 
-    public int AccountCode { get; }
-    public double? Credit { get; }
-    public double? Debt { get; }
-    public double? BalanceDebt { get; }
-    public double? BalanceCredit { get; }
+    public new int AccountCode { get; }
+    public new double? Credit { get; }
+    public new double? Debt { get; }
+    public new double? BalanceDebt { get; }
+    public new double? BalanceCredit { get; }
 }

@@ -1,13 +1,9 @@
 using MediatR;
-using SiteManagement.Application.Common.Interfaces;
 using SiteManagement.Application.Common.Interfaces.Due;
-using SiteManagement.Application.Common.Models;
-using SiteManagement.Application.Common.Models.Requests;
 using SiteManagement.Application.Common.Models.Requests.Register;
-using SiteManagement.Application.DueRelated.DueInformations.Command;
-using SiteManagement.Application.DueRelated.DueInformations.Response;
+using SiteManagement.Application.RegisterRelated.RegisterInformations.Response;
 
-namespace SiteManagement.Application.DueRelated.DueTransactions.Commands;
+namespace SiteManagement.Application.RegisterRelated.RegisterTransactions.Commands;
 
 public record ApplyDueTranListCommand
     : IRequest<ResponseApplyRegisterCommand>

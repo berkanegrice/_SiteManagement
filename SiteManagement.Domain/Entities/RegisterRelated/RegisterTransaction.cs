@@ -17,5 +17,5 @@ public class RegisterTransaction : BaseAuditableEntity
     
     public double? BalanceCredit { get; set; }
     
-    public RegisterInformation RegisterInformation { get; set; }
+    public string Type { get; set; }
 }

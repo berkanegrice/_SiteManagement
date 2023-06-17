@@ -34,19 +34,13 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     
         base.OnModelCreating(builder);
-        
-        builder.Entity<RegisterInformation>()
-            .HasMany(di => di.RegisterTransactions)
-            .WithOne(di => di.RegisterInformation)
-            .HasPrincipalKey(di => di.AccountCode)
-            .HasForeignKey(dt => dt.AccountCode);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.AddInterceptors(_auditableEntitySaveChangesInterceptor);
     }
 
-    public DbSet<User> Users { get; set; }
+    public DbSet<User>? Users { get; set; }
     
     public DbSet<RegisterTransaction> RegisterTransactions { get; set; }
     

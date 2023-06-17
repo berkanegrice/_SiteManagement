@@ -10,6 +10,7 @@ using SiteManagement.Application.Common.Helper;
 using SiteManagement.Domain.Entities.RegisterRelated;
 using AutoMapper;
 using AutoMapper.Internal;
+using SiteManagement.Application.RegisterRelated.RegisterInformations.Response;
 
 namespace SiteManagement.Infrastructure.Services.Registers;
 
@@ -28,10 +29,10 @@ public class RegisterFactory : IRegisterFactory
     
     private static List<string> Cleaner(string inputDueData)
     {
-        //Newly added. To be tested.
         inputDueData = inputDueData.Replace("	", ";"); 
         inputDueData = inputDueData
             .Replace(";;;;;;;;;", "")
+            .Replace(";;Nakli Yekün;;;;;;;", "")
             .Replace(";;Nakli Yekün;;;;  ;  ;  ;", "")
             .Replace("TARİH", "Date")
             .Replace("FİŞ NO", "FisNo")
@@ -41,7 +42,6 @@ public class RegisterFactory : IRegisterFactory
             .Replace("BORÇ BAKİYE (TL)", "BalanceDebt")
             .Replace("ALACAK BAKİYE (TL)", "BalanceCredit")
             .Replace(";;;;", ";")
-            .Replace(";;", ";")
             .Replace("  ;", ";")
             .Replace(";  ;", ";;");
 
@@ -55,18 +55,21 @@ public class RegisterFactory : IRegisterFactory
 
         return cleaned;
     }
-    private static List<RegisterTransaction> Process(string rawDueData)
+    private static List<RegisterTransaction> Process(string rawDueData, string type)
     {
         var cleaned = Cleaner(rawDueData);
         var accountCode = cleaned[0]
-            .Split(";")[1];
+            .Split(";;")[1];
 
         return cleaned.Skip(2)
             .Select(dueInfo => dueInfo.Split(";"))
             .Select(dueInfoParts => new RegisterTransaction()
             {
                 AccountCode = int.Parse(accountCode.Replace(" ", "").Trim()),
-                Date = DateTime.ParseExact(dueInfoParts[0], "dd.MM.yyyy", CultureInfo.InstalledUICulture, DateTimeStyles.AdjustToUniversal),
+                Type = type,
+                Date = DateTime.ParseExact(
+                    dueInfoParts[0], "dd.MM.yyyy", 
+                    CultureInfo.InstalledUICulture, DateTimeStyles.AdjustToUniversal),
                 Detail = dueInfoParts[2],
                 Debt = (string.IsNullOrWhiteSpace(dueInfoParts[3]) ? "" : dueInfoParts[3]).ToDouble(),
                 Credit = (string.IsNullOrWhiteSpace(dueInfoParts[4]) ? "" : dueInfoParts[4]).ToDouble(),
@@ -100,7 +103,7 @@ public class RegisterFactory : IRegisterFactory
         };
         
         var toRemove = _context.RegisterInformations
-            .Where(x => x.AccountCode > removeCond);
+            .Where(x => x.Type.Equals(request.Name));
         toRemove.ForAll(f => _context.RegisterInformations.Remove(f));
         
         await _context.SaveChangesAsync(default);
@@ -140,7 +143,7 @@ public class RegisterFactory : IRegisterFactory
         return new ResponseApplyRegisterCommand()
         {
             Status = await _context.SaveChangesAsync(default) > 0,
-            Type = "Mizan",
+            Type = $"{request.Name} {"Mizan"} yuklendi",
         };
         
         #endregion
@@ -170,7 +173,7 @@ public class RegisterFactory : IRegisterFactory
         };
         
         var toRemove = _context.RegisterTransactions
-            .Where(x => x.AccountCode > removeCond);
+            .Where(x => x.Type.Equals(request.Name));
         toRemove.ForAll(f => _context.RegisterTransactions.Remove(f));
         
         #endregion
@@ -188,7 +191,8 @@ public class RegisterFactory : IRegisterFactory
             }
             else
             {
-                var register = Process(part);
+                var register = Process(part, request.Name);
+                
                 register.ForEach(f => _context.RegisterTransactions.Add(f));
                 part = "";
             }
@@ -201,7 +205,7 @@ public class RegisterFactory : IRegisterFactory
         return new ResponseApplyRegisterCommand()
         {
             Status = await _context.SaveChangesAsync(default) > 0,
-            Type = "Muavin",
+            Type = $"{request.Name} {"Muavin"} yuklendi",
         };
         
         #endregion

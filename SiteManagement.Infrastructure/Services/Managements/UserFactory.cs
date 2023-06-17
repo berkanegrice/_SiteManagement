@@ -1,4 +1,3 @@
-using System.Linq.Dynamic.Core;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using SiteManagement.Application.Common.Interfaces;
@@ -58,7 +57,6 @@ public class UserFactory : IUserFactory
 
         #endregion
         
-        
         #region Add to IdentityUser Table
         
         // foreach (var userOnCsv in usersOnCsv)
@@ -84,7 +82,6 @@ public class UserFactory : IUserFactory
         
         #region Add to Users table
         
-        // TODO Refactor this. It's require for now because some user has a multiple property.
         foreach (var userOnCsv in usersOnCsv)
         {
             var us = new UserModel(userOnCsv);
@@ -98,7 +95,7 @@ public class UserFactory : IUserFactory
                 UserName = us.UserName,
                 AccountCode = int.Parse("131" + us.UserCode),
                 Type = "Aidat",
-                PhoneNumber = us.Email,
+                PhoneNumber = us.PhoneNumber,
                 Email = us.Email,
                 Address = us.Address,
                 Created = DateTime.Now
@@ -109,7 +106,7 @@ public class UserFactory : IUserFactory
                 UserName = us.UserName,
                 AccountCode = int.Parse("132" + us.UserCode),
                 Type = "Sufa",
-                PhoneNumber = us.Email,
+                PhoneNumber = us.PhoneNumber,
                 Email = us.Email,
                 Address = us.Address,
                 Created = DateTime.Now
@@ -120,7 +117,7 @@ public class UserFactory : IUserFactory
                 UserName = us.UserName,
                 AccountCode = int.Parse("133" + us.UserCode),
                 Type = "Kidem",
-                PhoneNumber = us.Email,
+                PhoneNumber = us.PhoneNumber,
                 Email = us.Email,
                 Address = us.Address,
                 Created = DateTime.Now

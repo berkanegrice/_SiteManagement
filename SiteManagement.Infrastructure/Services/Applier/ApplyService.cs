@@ -4,6 +4,7 @@ using SiteManagement.Application.Common.Interfaces.User;
 using SiteManagement.Application.Common.Models.Requests.File;
 using SiteManagement.Application.Common.Models.Requests.Register;
 using SiteManagement.Application.DueRelated.DueInformations.Response;
+using SiteManagement.Application.RegisterRelated.RegisterInformations.Response;
 using SiteManagement.Domain.Entities;
 
 namespace SiteManagement.Infrastructure.Services.Applier;
@@ -23,8 +24,7 @@ public class ApplyService : IApplyService
     
     public async Task<ResponseApplyRegisterCommand> ApplyList(int requestId)
     {
-        var data =
-            await _fileService.FetchFileById(new FetchFileRequest()
+        var data = await _fileService.FetchFileById(new FetchFileRequest()
         {
             Id = requestId
         });
@@ -33,8 +33,8 @@ public class ApplyService : IApplyService
 
         return register.RegisterType switch
         {
-            "Mizan" => await _registerFactory.ApplyRegisterInfList(new ApplyRegisterRequest() {Id = requestId, Name = register.RegisterName}),
-            "Muavin" => await _registerFactory.ApplyRegisterTransList(new ApplyRegisterRequest() {Id = requestId, Name = register.RegisterName}),
+            "Mizan" => await _registerFactory.ApplyRegisterInfList(new ApplyRegisterRequest() { Id = requestId, Name = register.RegisterName }),
+            "Muavin" => await _registerFactory.ApplyRegisterTransList(new ApplyRegisterRequest() { Id = requestId, Name = register.RegisterName }),
             _ => throw new NotImplementedException()
         };
     }

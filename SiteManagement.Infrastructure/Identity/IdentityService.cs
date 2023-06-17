@@ -1,5 +1,4 @@
 using SiteManagement.Application.Common.Interfaces;
-using SiteManagement.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +23,7 @@ public class IdentityService : IIdentityService
         _authorizationService = authorizationService;
     }
 
-    public async Task<string> GetUserEmailAsync(string userId)
+    public async Task<string> GetUserEmailAsync(string? userId)
     {
         var user =  await _userManager.Users.FirstAsync(u => u.Id == userId);
         
@@ -51,7 +50,7 @@ public class IdentityService : IIdentityService
         return (result.ToApplicationResult(), user.Id);
     }
 
-    public async Task<bool> IsInRoleAsync(string userId, string role)
+    public async Task<bool> IsInRoleAsync(string? userId, string role)
     {
         var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
 
